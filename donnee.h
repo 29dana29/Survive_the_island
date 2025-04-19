@@ -21,6 +21,7 @@ typedef struct {
     creature creatures[20];
     bateau bateau;
     tuile tuile;
+    pion pions[40];
 
 } casee;
 
