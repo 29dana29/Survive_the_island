@@ -1,25 +1,12 @@
 #include <windows.h>
 #include <stdio.h>
 
-void plein_ecran_total() {
-    HWND hwnd = GetConsoleWindow();
+void plein_ecran() {
+    keybd_event(VK_MENU, 0x38, 0, 0); // Appuie sur Alt
+    keybd_event(VK_RETURN, 0x1c, 0, 0); // Appuie sur Entrée
+    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Lache Entrée
+    keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Lache Alt
 
-    // Supprimer bordures, barre de titre, bouton X
-    LONG style = GetWindowLong(hwnd, GWL_STYLE);
-    style &= ~(WS_CAPTION | WS_THICKFRAME);
-    SetWindowLong(hwnd, GWL_STYLE, style);
-
-    // Supprimer la barre de menu
-    LONG exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-    exStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
-    SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
-
-    // Redimensionner pour couvrir tout l'écran
-    SetWindowPos(hwnd, HWND_TOP,
-        0, 0,
-        GetSystemMetrics(SM_CXSCREEN),
-        GetSystemMetrics(SM_CYSCREEN),
-        SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 

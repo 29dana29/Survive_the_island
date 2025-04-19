@@ -7,7 +7,7 @@ int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     system("cls");
-
+    plein_ecran();
     for (int i =0; i<=3; i++) {
         printf("%d\n", i);
     }
