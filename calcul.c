@@ -1,3 +1,5 @@
+#include "calcul.h"
+
 int indice_max(int liste[], int taille)
 {
     int max_index = 0;

@@ -14,12 +14,15 @@
 1744997146 c:\users\titis\onedrive\documents\it\survive_the_island\affichage.h
 	<windows.h>
 
-1745066071 source:c:\users\titis\onedrive\documents\it\survive_the_island\donnee.c
+1745067039 source:c:\users\titis\onedrive\documents\it\survive_the_island\donnee.c
 	<stdio.h>
 	<windows.h>
 	"donnee.h"
+	"calcul.h"
 
 1745065830 c:\users\titis\onedrive\documents\it\survive_the_island\donnee.h
 
 1745066931 source:c:\users\titis\onedrive\documents\it\survive_the_island\calcul.c
+
+1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
