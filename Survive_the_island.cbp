@@ -35,12 +35,25 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="affichage.h" />
+		<Unit filename="calcul.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="calcul.h" />
+		<Unit filename="donnee.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="donnee.h" />
+		<Unit filename="initialisation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="initialisation.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="plateau.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="plateau.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
