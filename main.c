@@ -8,19 +8,19 @@ int main()
 {
 
     SetConsoleOutputCP(CP_UTF8);
-    system("cls");
     plein_ecran();
-    for (int i =0; i<=3; i++) {
+    system("cls");
+    for (int i =0; i<=30; i++) {
         printf("%d\n", i);
     }
-    bateau bateau;
-    bateau.equipe_leader=-3;
-    bateau.pions[0].equipe=1;
-    bateau.pions[1].equipe=1;
-    bateau.pions[2].equipe=3;
-    int leader = determiner_leader(bateau);
-    printf("\n\n%d",leader);
-    contour(10, 10, 10, 10);
+
+    /*contour(10, 10, 10, 10);
+    int age;
+    gotoxy(11, 11);
+    printf("AGE:");
+    gotoxy(11, 12);
+    scanf("%d", age);*/
+
     getchar();
     return 0;
 }
