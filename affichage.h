@@ -6,7 +6,7 @@
 void plein_ecran();
 void contour(int x, int y, int w, int h);
 void set_color(WORD fg, WORD bg);
-
+void curseur_visible(int visible); //   0/1
 void rectangle(int x, int y, int w, int h, int c);
 
 

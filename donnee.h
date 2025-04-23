@@ -3,6 +3,7 @@
 typedef struct {
     int equipe; // 0, 1, 2, 3
     int numero; //points de 1 -> 6
+    char nom; // "A", "B"  pour reconnaitre sur le plateau
 } pion;
 
 typedef struct {

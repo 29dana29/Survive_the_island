@@ -19,7 +19,14 @@ void set_color(WORD fg, WORD bg) {
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h, (bg << 4) | fg);
 }
+void curseur_visible(int visible) {
+    CONSOLE_CURSOR_INFO cursorInfo;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = visible; // 0 = cacher, 1 = afficher
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
+}
 void rectangle(int x, int y, int w, int h, int c)
 {
     set_color(15, c);
