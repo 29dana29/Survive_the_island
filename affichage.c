@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
-
+#include "donnee.h"
 void plein_ecran() {
     keybd_event(VK_MENU, 0x38, 0, 0); // Appuie sur Alt
     keybd_event(VK_RETURN, 0x1c, 0, 0); // Appuie sur Entrée
@@ -62,4 +62,9 @@ void contour(int x, int y, int w, int h)
     printf("└");
     gotoxy(x+w, y+h);
     printf("┘");
+}
+
+void afficher_casee(int x, int y, casee case1)
+{
+    printf("%d", case1.tuile.type);
 }
