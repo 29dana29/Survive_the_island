@@ -66,5 +66,19 @@ void contour(int x, int y, int w, int h)
 
 void afficher_casee(int x, int y, casee case1)
 {
-    printf("%d", case1.tuile.type);
+    int couleur_fond;
+    if (case1.terre_ferme==0) { // mer
+        couleur_fond = 1;
+    } else if (case1.tuile.type==0) { // plage
+        couleur_fond = 14;
+    } else if (case1.tuile.type==1) { //foret
+        couleur_fond = 2;
+    } else if (case1.tuile.type==2) { //montagne
+        couleur_fond = 8;
+    }
+    rectangle(x, y, 6, 3, couleur_fond);
+    int n_pions_equipe = {0, 0, 0, 0};
+    /*for (int i =0; i++; i<40) {
+        if case1.pions[i].equipe
+    }*/
 }
