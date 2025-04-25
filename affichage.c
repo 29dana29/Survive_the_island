@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <conio.h>
 #include "donnee.h"
 void plein_ecran() {
     keybd_event(VK_MENU, 0x38, 0, 0); // Appuie sur Alt
@@ -8,7 +9,17 @@ void plein_ecran() {
     keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Lache Alt
 
 }
-
+int attendre_input()
+{
+    /*
+    Flèche haut : 72
+    Flèche bas : 80
+    Flèche gauche : 75
+    Flèche droite : 77
+    */
+    char ch = getch();  // Lire la touche
+    return (unsigned char)ch;  // Retourne la valeur numérique du caractère
+}
 
 void gotoxy(int x, int y) {
     COORD pos = {x, y};

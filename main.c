@@ -1,29 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <string.h>
+#include <conio.h>
 #include "affichage.h"
 #include "donnee.h"
 #include "plateau.h"
+
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     plein_ecran();
     system("cls");
 
-    /*contour(0, 0, 130, 40);
-    gotoxy(1, 1);
+    int c, i;
+    i=0;
+    while ((c = attendre_input()) != 13) { // input différent de Entrée
+        switch (c) {
+    case 72:
+        i++;
+        break;
+    case 80:
+        i--;
+        break;
+        }
+        printf("%d\n", i);
+    }
 
-    gotoxy(1, 1);
-    for (int i =0; i<=12; i++) {
-        rectangle(1, 1+(i*3), 6, 3, i%3+2);
-    }*/
 
-    casee case1;
-    case1.tuile.type = 0;
-    case1.terre_ferme = 1;
-    //afficher_casee(4, 4, case1);
-    printf("%d", case1.pions[2].equipe);
 
-    getchar();
+
     return 0;
 }
