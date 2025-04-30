@@ -18,3 +18,12 @@ int determiner_leader(bateau bateau)
        return indice_max(scores, 4);
     }
 }
+int compter_pions_couleur(casee case1, int equipe) {
+    int n = 0;
+    for (int i =0; i<40; i++) {
+        if (case1.pions[i].equipe == equipe+1) {
+            n+=1;
+        }
+    }
+    return n;
+}

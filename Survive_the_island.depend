@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1745591836 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+1745599518 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
 	<windows.h>
 	<stdio.h>
 	<conio.h>
@@ -7,7 +7,7 @@
 
 1745063423 source:c:\users\titis\onedrive\documents\it\survive_the_island\plateau.c
 
-1745591849 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+1745600793 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -21,13 +21,13 @@
 	<windows.h>
 	"donnee.h"
 
-1745067039 source:c:\users\titis\onedrive\documents\it\survive_the_island\donnee.c
+1745600075 source:c:\users\titis\onedrive\documents\it\survive_the_island\donnee.c
 	<stdio.h>
 	<windows.h>
 	"donnee.h"
 	"calcul.h"
 
-1745417170 c:\users\titis\onedrive\documents\it\survive_the_island\donnee.h
+1745601176 c:\users\titis\onedrive\documents\it\survive_the_island\donnee.h
 
 1745067757 source:c:\users\titis\onedrive\documents\it\survive_the_island\calcul.c
 	"calcul.h"

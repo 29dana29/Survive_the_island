@@ -77,6 +77,13 @@ void contour(int x, int y, int w, int h)
 
 void afficher_casee(int x, int y, casee case1)
 {
+    /* 5 x 3
+    P1234  1 pion rouge, 2 bleu,
+    #####
+    #####
+    0Noir 1BleuFoncé 2Vert 3Cyan 4Rouge 5Magenta 6JauneF
+    7GrisC 10VertF 11CyanC 12RougeC 13MagentaC 14Jaune 15Blanc
+    */
     int couleur_fond;
     if (case1.terre_ferme==0) { // mer
         couleur_fond = 1;
@@ -87,9 +94,20 @@ void afficher_casee(int x, int y, casee case1)
     } else if (case1.tuile.type==2) { //montagne
         couleur_fond = 8;
     }
-    rectangle(x, y, 6, 3, couleur_fond);
-    int n_pions_equipe = {0, 0, 0, 0};
-    /*for (int i =0; i++; i<40) {
-        if case1.pions[i].equipe
-    }*/
+    rectangle(x, y, 5, 3, couleur_fond);
+    set_color(15, couleur_fond);
+    gotoxy(x, y);
+    printf("P");
+    // ROUGE:
+    gotoxy(x+1, y);
+    set_color(4, couleur_fond); //Rouge sur fond.
+    if (compter_pions_couleur(case1, 0) == 10) {
+        printf("X");
+    } else {
+        printf("%d", compter_pions_couleur(case1, 0));
+    }
+    //BLEU
+    gotoxy(x+2, y);
+    set_color(1, couleur_fond);
+
 }
