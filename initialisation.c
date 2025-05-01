@@ -1,5 +1,33 @@
 #include "initialisation.h"
 #include "donnee.h"
+
+
+pion pion_null;
+bateau bateau_null;
+creature creature_null;
+tuile tuile_null;
+casee case_null;
+joueur joueur_null;
+
+int socle[13][13] = { // LISTE DE COLONNES
+    //
+    {0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,1,1,1,1,0,0,0,0},
+    {0,0,0,1,1,1,1,1,1,0,0,0,0},
+    {0,0,0,1,1,1,1,1,1,1,0,0,0},
+    {0,0,0,1,1,1,0,1,1,1,0,0,0},
+    {0,0,0,1,1,1,1,1,1,1,0,0,0},
+    {0,0,0,0,1,1,1,1,1,0,0,0,0},
+    {0,0,0,0,1,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,1,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0}
+    };
+
+
+
 void initialiser_nulls() {
     pion_null.equipe=-1;
     pion_null.nom="Z";
@@ -7,7 +35,7 @@ void initialiser_nulls() {
     for (int i =0; i<3; i++) {
         bateau_null.pions[i] = pion_null;
     }
-    bateau_null.equipe_leader = -1;
+    bateau_null.equipe_leader = -2;
     creature_null.type=-1;
     tuile_null.type=-1;
     tuile_null.carte=-1;

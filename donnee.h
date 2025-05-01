@@ -11,6 +11,7 @@ typedef struct {
 typedef struct {
     pion pions[3];
     int equipe_leader; // 0  FONCTION determiner_leader
+    // -2 : pas de bateau -1:Personne leader 0->3:le leader est...
 } bateau;
 typedef struct {
     int type; //0->2
@@ -35,16 +36,9 @@ typedef struct {
     int cartes [40]; // PEUT ETRE MODIFIE EN STRUCT MAIS PAS FORCEMENT NECESSAIRE
 } joueur;
 
-extern pion pion_null;
-extern bateau bateau_null;
-extern creature creature_null;
-extern tuile tuile_null;
-extern casee case_null;
-extern joueur joueur_null;
 
 
 
-void initialiser_nulls();
 int determiner_leader(bateau bateau);
 int compter_pions_couleur(casee case1, int couleur);
 #endif // DONNEE_H_INCLUDED

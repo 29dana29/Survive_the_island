@@ -6,32 +6,26 @@
 #include "affichage.h"
 #include "donnee.h"
 #include "plateau.h"
-
+#include "initialisation.h"
 
 int main()
-{
-
-    SetConsoleOutputCP(CP_UTF8);
+{SetConsoleOutputCP(CP_UTF8);
     plein_ecran();
-    system("cls");
-
-    casee plateau[13][13];
-    tuile tuile1;
-    tuile1.type = 1;
-    tuile1.carte = 3;
-    pion pion1;
-    pion1.equipe = 0;
-    pion1.nom = 'A';
-    pion1.numero=3;
-    casee case1;
-    case1.pions[0] = pion1;
-    case1.tuile = tuile1;
-    case1.terre_ferme = 1;
-    plateau[0][0] = case1;
-    afficher_casee(0, 0, case1);
-
-
-
+    initialiser_nulls();
+    extern casee case_null;
+    extern pion pion_null;
+    extern int socle[13][13];
+    int n=0;
+    for (int i=0; i<13; i++) {
+        for (int j = 0; j<13; j++) {
+            if (socle[i][j]==1) {
+                n++;
+                printf("%d %d\n", i+1, j+1);
+            }
+        }
+    }
+    printf("%d", n);
+printf("\n\n\n\n");
 
     return 0;
 }

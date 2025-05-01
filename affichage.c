@@ -2,7 +2,12 @@
 #include <stdio.h>
 #include <conio.h>
 #include "donnee.h"
-void plein_ecran() {
+
+int couleurs_equipe[4] = {4, 1, 2, 6};
+
+
+void plein_ecran()
+{
     keybd_event(VK_MENU, 0x38, 0, 0); // Appuie sur Alt
     keybd_event(VK_RETURN, 0x1c, 0, 0); // Appuie sur Entrée
     keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Lache Entrée
@@ -21,16 +26,19 @@ int attendre_input()
     return (unsigned char)ch;  // Retourne la valeur numérique du caractère
 }
 
-void gotoxy(int x, int y) {
+void gotoxy(int x, int y)
+{
     COORD pos = {x, y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void set_color(WORD fg, WORD bg) {
+void set_color(WORD fg, WORD bg)
+{
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h, (bg << 4) | fg);
 }
-void curseur_visible(int visible) {
+void curseur_visible(int visible)
+{
     CONSOLE_CURSOR_INFO cursorInfo;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -41,8 +49,10 @@ void curseur_visible(int visible) {
 void rectangle(int x, int y, int w, int h, int c)
 {
     set_color(15, c);
-    for (int i = 0; i<w; i++){
-        for (int j = 0; j<h; j++) {
+    for (int i = 0; i<w; i++)
+    {
+        for (int j = 0; j<h; j++)
+        {
             gotoxy(x+i, y+j);
             printf(" ");
         }
@@ -51,13 +61,15 @@ void rectangle(int x, int y, int w, int h, int c)
 void contour(int x, int y, int w, int h)
 {
     set_color(15, 0);
-    for (int i =0; i<=w-2; i++) {
+    for (int i =0; i<=w-2; i++)
+    {
         gotoxy(x+1+i, y);
         printf("─");
         gotoxy(x+1+i, y+h);
         printf("─");
     }
-    for (int j = 0; j<=h-2; j++) {
+    for (int j = 0; j<=h-2; j++)
+    {
 
         gotoxy(x, y+1+j);
         printf("│");
@@ -85,29 +97,84 @@ void afficher_casee(int x, int y, casee case1)
     7GrisC 10VertF 11CyanC 12RougeC 13MagentaC 14Jaune 15Blanc
     */
     int couleur_fond;
-    if (case1.terre_ferme==0) { // mer
-        couleur_fond = 1;
-    } else if (case1.tuile.type==0) { // plage
-        couleur_fond = 14;
-    } else if (case1.tuile.type==1) { //foret
-        couleur_fond = 2;
-    } else if (case1.tuile.type==2) { //montagne
-        couleur_fond = 8;
+    if (case1.terre_ferme==0)   // mer
+    {
+        couleur_fond = 11;
+    }
+    else if (case1.tuile.type==0)     // plage
+    {
+        couleur_fond = 14; //Jaune
+    }
+    else if (case1.tuile.type==1)     //foret
+    {
+        couleur_fond = 10; // VertF
+    }
+    else if (case1.tuile.type==2)     //montagne
+    {
+        couleur_fond = 8; //Gris
     }
     rectangle(x, y, 5, 3, couleur_fond);
-    set_color(15, couleur_fond);
+    set_color(0, couleur_fond);
     gotoxy(x, y);
     printf("P");
     // ROUGE:
     gotoxy(x+1, y);
     set_color(4, couleur_fond); //Rouge sur fond.
-    if (compter_pions_couleur(case1, 0) == 10) {
+    if (compter_pions_couleur(case1, 0) == 10)
+    {
         printf("X");
-    } else {
+    }
+    else
+    {
         printf("%d", compter_pions_couleur(case1, 0));
     }
-    //BLEU
+    // BLEU
     gotoxy(x+2, y);
-    set_color(1, couleur_fond);
+    set_color(1, couleur_fond); // Bleu sur fond.
+    if (compter_pions_couleur(case1, 1) == 10)
+    {
+        printf("X");
+    }
+    else
+    {
+        printf("%d", compter_pions_couleur(case1, 1));
+    }
+    // VERT
+    gotoxy(x+3, y);
+    set_color(2, couleur_fond); // Vert sur fond.
+    if (compter_pions_couleur(case1, 2) == 10)
+    {
+        printf("X");
+    }
+    else
+    {
+        printf("%d", compter_pions_couleur(case1, 2));
+    }
+    // JAUNE
+    gotoxy(x+4, y);
+    set_color(6, couleur_fond); // JauneF
+    if (compter_pions_couleur(case1, 3) == 10)
+    {
+        printf("X");
+    }
+    else
+    {
+        printf("%d", compter_pions_couleur(case1, 3));
+    }
+
+    // #################BATEAU ######################
+    if (case1.bateau.equipe_leader!=-2) // CODE POUR BATEAU NON PRESENT, BATEAU_NULL
+    {
+        rectangle(x, y+2, 3, 1, 13);
+        for (int i =0; i<=2; i++)
+        {
+            if (case1.bateau.pions[i].equipe!=-1)
+            {
+                gotoxy(x+i, y+2);
+                set_color(couleurs_equipe[i], 13);
+                printf("P");
+            }
+        }
+    }
 
 }
