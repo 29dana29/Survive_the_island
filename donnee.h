@@ -14,11 +14,11 @@ typedef struct {
     // -2 : pas de bateau -1:Personne leader 0->3:le leader est...
 } bateau;
 typedef struct {
-    int type; //0->2
+    int type; //0->2 0:Serpent, 1:Requin, 2:Baleine
 } creature;
 typedef struct{
     int type; // 0: plage; 1: foret; 2: Montagne
-    int carte; // 0-> 11 / 1-> 12
+    int carte; // 0-> 9 / 1-> 10
 } tuile;
 typedef struct {
     int terre_ferme; //0 : mer     1 : terre ferme

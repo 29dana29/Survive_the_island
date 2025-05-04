@@ -91,7 +91,7 @@ void afficher_casee(int x, int y, casee case1)
 {
     /* 5 x 3
     P1234  1 pion rouge, 2 bleu,
-    #####
+    SBR##
     #####
     0Noir 1BleuFoncé 2Vert 3Cyan 4Rouge 5Magenta 6JauneF
     7GrisC 10VertF 11CyanC 12RougeC 13MagentaC 14Jaune 15Blanc
@@ -175,6 +175,31 @@ void afficher_casee(int x, int y, casee case1)
                 printf("P");
             }
         }
+    }
+    // ################## CREATURES ################
+
+    for (int i =0; i<3; i++)
+    {
+        gotoxy(x+i, y+1);
+        // Serpent: rouge sur noir, Requin:Bleu sur noir, Baleine:Violet sur noir
+        set_color(0, couleur_fond); // Noir sur fond
+
+        switch (case1.creatures[i].type) {
+            case 0:
+        printf("S");
+        break;
+    case 1:
+        printf("R");
+        break;
+    case 2:
+        printf("B");
+        break;
+    case -1:
+        break;
+    default:
+        break;
+        }
+
     }
 
 }

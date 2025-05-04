@@ -9,23 +9,17 @@
 #include "initialisation.h"
 
 int main()
-{SetConsoleOutputCP(CP_UTF8);
+{
+    SetConsoleOutputCP(CP_UTF8);
     plein_ecran();
+
+    srand(time(NULL));
     initialiser_nulls();
     extern casee case_null;
     extern pion pion_null;
     extern int socle[13][13];
-    int n=0;
-    for (int i=0; i<13; i++) {
-        for (int j = 0; j<13; j++) {
-            if (socle[i][j]==1) {
-                n++;
-                printf("%d %d\n", i+1, j+1);
-            }
-        }
-    }
-    printf("%d", n);
-printf("\n\n\n\n");
+    casee Plateau[13][13];
+    extern tuile deck_tuile[40];
 
     return 0;
 }

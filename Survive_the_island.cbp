@@ -39,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="calcul.h" />
+		<Unit filename="cartes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cartes.h" />
 		<Unit filename="donnee.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1746058962 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+1746350494 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
 	<windows.h>
 	<stdio.h>
 	<conio.h>
@@ -7,7 +7,7 @@
 
 1745063423 source:c:\users\titis\onedrive\documents\it\survive_the_island\plateau.c
 
-1746060053 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+1746356673 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -28,18 +28,18 @@
 	"donnee.h"
 	"calcul.h"
 
-1746058858 c:\users\titis\onedrive\documents\it\survive_the_island\donnee.h
+1746350400 c:\users\titis\onedrive\documents\it\survive_the_island\donnee.h
 
 1746055887 source:c:\users\titis\onedrive\documents\it\survive_the_island\calcul.c
 	"calcul.h"
 
 1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
-1746059850 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+1746351050 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
 	"initialisation.h"
 	"donnee.h"
 
-1746055371 c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.h
+1746356751 c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.h
 	"donnee.h"
 
 1745399902 source:c:\users\schil\onedrive\bureau\anatole\travail\estaca\info\the island\survive_the_island\affichage.c
@@ -76,4 +76,6 @@
 1745399902 source:c:\users\schil\onedrive\bureau\anatole\travail\estaca\info\the island\survive_the_island\plateau.c
 
 1745063423 c:\users\titis\onedrive\documents\it\survive_the_island\plateau.h
+
+1746347561 source:c:\users\titis\onedrive\documents\it\survive_the_island\cartes.c
 
