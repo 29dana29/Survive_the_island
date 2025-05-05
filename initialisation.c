@@ -1,6 +1,9 @@
 #include "initialisation.h"
 #include "donnee.h"
 #include <stdlib.h>
+#include "affichage.h"
+#include <stdio.h>
+
 
 pion pion_null;
 bateau bateau_null;
@@ -88,6 +91,11 @@ void initialiser_nulls() {
     }
     case_null.terre_ferme=0;
     case_null.tuile=tuile_null;
+    joueur_null.equipe=-1;
+    joueur_null.points=-1;
+    for (int i = 0; i<40; i++) {
+        joueur_null.cartes[i] = -1;
+    }
 }
 
 void initialiser_plateau(casee Plateau[13][13], casee casenulle) {
@@ -126,5 +134,26 @@ void placer_tuiles(casee Plateau[13][13], tuile tuiles[40], int socle[13][13]) {
                 k++;  // Incrémenter le compteur de tuiles
             }
         }
+    }
+}
+
+void initialiser_joueurs(joueur joueurs[4], int *n_joueurs) {
+    char *equipes[4] = {"Rouge", "Bleu", "Vert", "Jaune"};
+    int selected;
+    char *options[] = {"2 joueurs", "3 joueurs", "4 joueurs"};
+
+    gotoxy(75, 3);
+    printf("Combien de joueurs ?");
+    selection_menu(75, 5, options, 3, &selected);
+
+    rectangle(75, 3, 20, 6, 0);  // Nettoie la zone du menu (titre + choix)
+
+    *n_joueurs = selected + 2;
+
+    for (int i = 0; i < *n_joueurs; i++) {
+        joueurs[i].equipe = i;
+        joueurs[i].points = 0;
+        gotoxy(75, 5 + i);
+        printf("Joueur %d : %s", i + 1, equipes[i]);
     }
 }

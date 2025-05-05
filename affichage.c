@@ -37,6 +37,11 @@ void gotoxy(int x, int y)
 
 void set_color(WORD fg, WORD bg)
 {
+    /*
+    0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
+    8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
+    */
+
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h, (bg << 4) | fg);
 }
@@ -91,14 +96,12 @@ void contour(int x, int y, int w, int h)
 }
 
 
-void selection_menu(int x, int y, char *titre, char *options[], int num_options, int *selected_index) {
+void selection_menu(int x, int y, char *options[], int num_options, int *selected_index) {
     int key = 0;
     *selected_index = 0;
 
     // Affichage initial du menu
-    gotoxy(x, y);
-    set_color(12, 2);
-    printf("%s", titre);
+    set_color(15, 0);
     for (int i = 0; i < num_options; i++) {
         gotoxy(0 + x, i +y+1); // Déplace le curseur sur chaque ligne du menu
         if (i == *selected_index)
@@ -136,8 +139,9 @@ void afficher_casee(int x, int y, casee case1)
     P1234  1 pion rouge, 2 bleu,
     SBR##
     #####
-    0Noir 1BleuFoncé 2Vert 3Cyan 4Rouge 5Magenta 6JauneF
-    7GrisC 10VertF 11CyanC 12RougeC 13MagentaC 14Jaune 15Blanc
+    0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
+    8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
+
     */
     int couleur_fond;
     if (case1.terre_ferme==0)   // mer

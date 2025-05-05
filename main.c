@@ -13,11 +13,11 @@ int main()
 {
     SetConsoleOutputCP(CP_UTF8);
     plein_ecran();
-
+    curseur_visible(0);
     srand(time(NULL));
     initialiser_nulls();
     extern casee case_null;
-    extern pion pion_null;
+    extern joueur joueur_null;
     extern int socle[13][13];
     casee Plateau[13][13];
     initialiser_plateau(Plateau, case_null);
@@ -32,11 +32,12 @@ int main()
             afficher_casee(5*i, 3*j, Plateau[i][j]);
         }
     }
-    int selected;
-    char *options[] = {"2", "3", "4"};
-    char *titre = "Choisir le nombre de joueurs";
-    selection_menu(75, 5, titre,  options, 3, &selected);
-    gotoxy(75, 10);
-    printf("Joueurs choisis : %s\n", options[selected]);
+    int n_joueurs=0;
+    joueur joueurs[4]; // Tout ca peut etre mis dans initilialisation comme ca change jamais
+    for (int i = 0; i<4; i++) { //
+        joueurs[i] = joueur_null; //
+    } //
+    initialiser_joueurs(joueurs, &n_joueurs);
+
     return 0;
 }
