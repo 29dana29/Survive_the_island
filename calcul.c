@@ -10,3 +10,5 @@ int indice_max(int liste[], int taille)
     }
     return max_index;
 }
+
+

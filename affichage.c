@@ -14,22 +14,25 @@ void plein_ecran()
     keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Lache Alt
 
 }
-int attendre_input()
-{
-    /*
-    Flèche haut : 72
-    Flèche bas : 80
-    Flèche gauche : 75
-    Flèche droite : 77
-    */
-    char ch = getch();  // Lire la touche
-    return (unsigned char)ch;  // Retourne la valeur numérique du caractère
+
+int get_input() {
+    int key = getch();  // Récupère la première touche
+
+    if (key == 224) {  // Si c'est un code spécial (comme une flèche)
+        key = getch();  // Récupère la touche spéciale (flèche, etc.)
+    }
+
+    return key;  // Retourne le code de la touche
 }
 
+
+// Fonction pour déplacer le curseur à la position spécifiée (x, y)
 void gotoxy(int x, int y)
 {
-    COORD pos = {x, y};
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 void set_color(WORD fg, WORD bg)
@@ -87,6 +90,46 @@ void contour(int x, int y, int w, int h)
     printf("┘");
 }
 
+
+void selection_menu(int x, int y, char *titre, char *options[], int num_options, int *selected_index) {
+    int key = 0;
+    *selected_index = 0;
+
+    // Affichage initial du menu
+    gotoxy(x, y);
+    set_color(12, 2);
+    printf("%s", titre);
+    for (int i = 0; i < num_options; i++) {
+        gotoxy(0 + x, i +y+1); // Déplace le curseur sur chaque ligne du menu
+        if (i == *selected_index)
+            printf("-> %s", options[i]);  // Affiche l'option sélectionnée avec la flèche
+        else
+            printf("   %s", options[i]);
+    }
+
+    while (1) {
+        key = get_input();  // Récupère la touche pressée par l'utilisateur
+
+        if (key == 72 && *selected_index > 0) {  // Flèche haut
+            (*selected_index)--;  // Déplace la sélection vers le haut
+        } else if (key == 80 && *selected_index < num_options - 1) {  // Flèche bas
+            (*selected_index)++;  // Déplace la sélection vers le bas
+        } else if (key == 13) {  // Touche Entrée
+            break;  // Quitte la boucle lorsque l'utilisateur appuie sur Entrée
+        }
+
+        // Rafraîchit l'affichage en mettant à jour le menu sans effacer l'écran
+        for (int i = 0; i < num_options; i++) {
+            gotoxy(0 + x, i+y+1);  // Déplace le curseur à la position de la ligne
+            if (i == *selected_index)
+                printf("-> %s", options[i]);  // Affiche l'option sélectionnée avec la flèche
+            else
+                printf("   %s", options[i]);
+        }
+    }
+}
+
+
 void afficher_casee(int x, int y, casee case1)
 {
     /* 5 x 3
@@ -124,7 +167,7 @@ void afficher_casee(int x, int y, casee case1)
     {
         printf("X");
     }
-    else
+    else if (compter_pions_couleur(case1, 0) != 0)
     {
         printf("%d", compter_pions_couleur(case1, 0));
     }
@@ -135,7 +178,7 @@ void afficher_casee(int x, int y, casee case1)
     {
         printf("X");
     }
-    else
+    else if (compter_pions_couleur(case1, 1) != 0)
     {
         printf("%d", compter_pions_couleur(case1, 1));
     }
@@ -146,7 +189,7 @@ void afficher_casee(int x, int y, casee case1)
     {
         printf("X");
     }
-    else
+    else if (compter_pions_couleur(case1, 2) != 0)
     {
         printf("%d", compter_pions_couleur(case1, 2));
     }
@@ -157,7 +200,7 @@ void afficher_casee(int x, int y, casee case1)
     {
         printf("X");
     }
-    else
+    else if (compter_pions_couleur(case1, 3) != 0)
     {
         printf("%d", compter_pions_couleur(case1, 3));
     }
@@ -184,22 +227,25 @@ void afficher_casee(int x, int y, casee case1)
         // Serpent: rouge sur noir, Requin:Bleu sur noir, Baleine:Violet sur noir
         set_color(0, couleur_fond); // Noir sur fond
 
-        switch (case1.creatures[i].type) {
-            case 0:
-        printf("S");
-        break;
-    case 1:
-        printf("R");
-        break;
-    case 2:
-        printf("B");
-        break;
-    case -1:
-        break;
-    default:
-        break;
+        switch (case1.creatures[i].type)
+        {
+        case 0:
+            printf("S");
+            break;
+        case 1:
+            printf("R");
+            break;
+        case 2:
+            printf("B");
+            break;
+        case -1:
+            break;
+        default:
+            break;
         }
 
     }
 
 }
+
+

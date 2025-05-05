@@ -5,7 +5,7 @@
 typedef struct {
     int equipe; // 0 Rouge, 1 Bleu, 2 Vert, 3 Jaune
     int numero; //points de 1 -> 5
-    char nom; // "A", "B"  pour reconnaitre sur le plateau
+    char* nom; // "A", "B"  pour reconnaitre sur le plateau
 } pion;
 
 typedef struct {
