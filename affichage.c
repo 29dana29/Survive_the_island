@@ -16,6 +16,13 @@ void plein_ecran()
 }
 
 int get_input() {
+    /*
+    72 pour flèche haut
+    80 pour flèche bas
+    75 pour flèche gauche
+    77 pour flèche droite
+    13 pour Entrée
+    */
     int key = getch();  // Récupère la première touche
 
     if (key == 224) {  // Si c'est un code spécial (comme une flèche)
@@ -133,12 +140,12 @@ void selection_menu(int x, int y, char *options[], int num_options, int *selecte
 }
 
 
-void afficher_casee(int x, int y, casee case1)
+void afficher_casee(int x, int y, casee case1, int select) // select 0/1
 {
     /* 5 x 3
     P1234  1 pion rouge, 2 bleu,
     SBR##
-    #####
+    BBB##
     0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
     8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
 
@@ -161,9 +168,16 @@ void afficher_casee(int x, int y, casee case1)
         couleur_fond = 8; //Gris
     }
     rectangle(x, y, 5, 3, couleur_fond);
+    if (select==1) {
+        gotoxy(x+4, y+2);
+        set_color(0, 15);
+        printf("X");
+    }
     set_color(0, couleur_fond);
     gotoxy(x, y);
-    printf("P");
+    if (compter_pions_couleur(case1, 0)+compter_pions_couleur(case1, 1)+compter_pions_couleur(case1, 2)+compter_pions_couleur(case1, 3) != 0) {
+       printf("P");
+    }
     // ROUGE:
     gotoxy(x+1, y);
     set_color(4, couleur_fond); //Rouge sur fond.
@@ -253,3 +267,47 @@ void afficher_casee(int x, int y, casee case1)
 }
 
 
+void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
+    //Proto:
+    // void afficher_casee(int x, int y, casee case1, int select)  select: 0/1
+
+
+    //P1234  1 pion rouge, 2 bleu,
+    //SBR##
+    //BBB#0  <-- indicateur de selection ici, type X en noir sur blanc
+
+    /*
+    72 pour flèche haut
+    80 pour flèche bas
+    75 pour flèche gauche
+    77 pour flèche droite
+    13 pour Entrée
+    */
+
+    *x_s = 6; // 0->12
+    *y_s = 6; // 0->12
+    afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
+    while (1) {
+        int key = get_input();
+        if (key==72&&*y_s>0) { // Fleche haut + on est pas tout en haut
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
+            *y_s-=1;
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
+        } else if (key== 80 && *y_s<12) { //Fleche bas + on est pas tout en bas
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
+            *y_s+=1;
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
+        } else if (key==75 && *x_s>0) { // Fleche gauche + on est pas tout a droite
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
+            *x_s-=1;
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
+        } else if (key==77 && *x_s<12) { // Fleche droite + on est pas tout a droite
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
+            *x_s+=1;
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
+        } else if (key==13) { // Entrée
+            break; //Quitte la boucle, on garde donc la dernière case sélectionnée
+        }
+    }
+
+}

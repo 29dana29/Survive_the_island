@@ -29,6 +29,8 @@ int socle[13][13] = { // LISTE DE COLONNES
     {0,0,0,0,0,0,0,0,0,0,0,0,0}
     };
 
+int valeurs_pions[] = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5};
+
 tuile deck_tuile[40] = {
     {0, 0},
     {0, 0},
@@ -138,6 +140,9 @@ void placer_tuiles(casee Plateau[13][13], tuile tuiles[40], int socle[13][13]) {
 }
 
 void initialiser_joueurs(joueur joueurs[4], int *n_joueurs) {
+        for (int i = 0; i<4; i++) { //
+        joueurs[i] = joueur_null;
+    }
     char *equipes[4] = {"Rouge", "Bleu", "Vert", "Jaune"};
     int selected;
     char *options[] = {"2 joueurs", "3 joueurs", "4 joueurs"};

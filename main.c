@@ -29,15 +29,18 @@ int main()
     placer_serpents(Plateau);
     for (int i = 0; i<13; i++) {
         for (int j = 0; j<13; j++) {
-            afficher_casee(5*i, 3*j, Plateau[i][j]);
+            afficher_casee(5*i, 3*j, Plateau[i][j], 0);
         }
     }
     int n_joueurs=0;
-    joueur joueurs[4]; // Tout ca peut etre mis dans initilialisation comme ca change jamais
-    for (int i = 0; i<4; i++) { //
-        joueurs[i] = joueur_null; //
-    } //
+    joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+
+    //test débile:
+    int x_s, y_s;
+    selection_case(Plateau, &x_s, &y_s);
+    printf("%d %d", x_s ,y_s);
+
 
     return 0;
 }
