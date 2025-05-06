@@ -8,6 +8,7 @@
 #include "donnee.h"
 #include "plateau.h"
 #include "initialisation.h"
+#include "cartes.h"
 
 int main()
 {
@@ -36,7 +37,12 @@ int main()
     initialiser_joueurs(joueurs, &n_joueurs);
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);
-
+    joueurs[0].cartes[0] = 2;
+    joueurs[0].cartes[1] = 6;
+    joueurs[0].cartes[2] = 2;
+    joueurs[0].cartes[3] = 3;
+    int i_carte;
+    choisir_carte(joueurs[0], &i_carte);
 
 
     return 0;

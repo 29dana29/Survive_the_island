@@ -34,6 +34,7 @@ typedef struct {
     int equipe; // 0 Rouge, 1 Bleu, 2 Vert, 3 Jaune
     int points; // somme de pions sortis * leur numéro respectif
     int cartes [40]; // PEUT ETRE MODIFIE EN STRUCT MAIS PAS FORCEMENT NECESSAIRE
+    int p_mouvement;
 } joueur;
 
 
