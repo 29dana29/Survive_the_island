@@ -6,30 +6,50 @@
 int couleurs_equipe[4] = {4, 1, 2, 6};
 
 
-void plein_ecran()
-{
-    keybd_event(VK_MENU, 0x38, 0, 0); // Appuie sur Alt
-    keybd_event(VK_RETURN, 0x1c, 0, 0); // Appuie sur Entrée
-    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Lache Entrée
-    keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Lache Alt
+void plein_ecran() {
+    // Save the current cursor visibility state
+    CONSOLE_CURSOR_INFO cursorInfo;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    int cursorVisible = cursorInfo.bVisible;
 
+    // Simulate Alt + Enter key combination to toggle fullscreen
+    keybd_event(VK_MENU, 0x38, 0, 0); // Press Alt
+    keybd_event(VK_RETURN, 0x1c, 0, 0); // Press Enter
+    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Release Enter
+    keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Release Alt
+
+    // Wait a short moment for the console to switch to fullscreen
+    Sleep(500);
+
+    // Restore the cursor visibility state
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = cursorVisible;
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
+
 
 int get_input() {
     /*
-    72 pour flèche haut
-    80 pour flèche bas
-    75 pour flèche gauche
-    77 pour flèche droite
-    13 pour Entrée
+    72 for Up Arrow
+    80 for Down Arrow
+    75 for Left Arrow
+    77 for Right Arrow
+    13 for Enter
+    27 for Escape
     */
-    int key = getch();  // Récupère la première touche
 
-    if (key == 224) {  // Si c'est un code spécial (comme une flèche)
-        key = getch();  // Récupère la touche spéciale (flèche, etc.)
+    int key = getch();  // Retrieve the first key
+
+    if (key == 224) { // If it's a special key (like an arrow key)
+        key = getch(); // Retrieve the actual special key code
     }
 
-    return key;  // Retourne le code de la touche
+    if (key == 27) { // Escape key
+        ExitProcess(0); // Immediately close the application
+    }
+
+    return key;  // Return the key as usual
 }
 
 
