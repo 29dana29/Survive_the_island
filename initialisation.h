@@ -7,4 +7,7 @@ void placer_serpents(casee Plateau[13][13]);
 void melanger_tuiles(tuile tuiles[40]);
 void placer_tuiles(casee Plateau[13][13], tuile tuiles[40], int socle[13][13]);
 void initialiser_joueurs(joueur joueurs[4], int *n_joueurs);
+void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs);
+void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs);
+
 #endif // INITIALISATION_H_INCLUDED

@@ -75,7 +75,7 @@ tuile deck_tuile[40] = {
 
 void initialiser_nulls() {
     pion_null.equipe=-1;
-    pion_null.nom="Z";
+    strcpy(pion_null.nom, "Z");
     pion_null.numero=-1;
     for (int i =0; i<3; i++) {
         bateau_null.pions[i] = pion_null;
@@ -162,3 +162,68 @@ void initialiser_joueurs(joueur joueurs[4], int *n_joueurs) {
         printf("Joueur %d : %s", i + 1, equipes[i]);
     }
 }
+
+void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
+
+    char * noms_pions[10]={"A","B","C","D","E","F","G","H","I","J"};
+    for (int i = 0; i<10; i++) {
+        int val_pion = (i+2)/2; //Valeur Formule pas piquée des hannetons grace a division euclid, qui permet de veski toute une liste de pions
+        for (int j = 0; j<n_joueurs; j++) {
+
+            pion pion_actuel;
+            pion_actuel.equipe=j;
+
+            strcpy(pion_actuel.nom, noms_pions[i]);
+
+            pion_actuel.numero=val_pion;
+            gotoxy(13*5, 2);
+            set_color(15, 0);
+            printf("JOUEUR %d: Selectionne ou tu veux placer ton pion de valeur %d", j, val_pion);
+            int x_pion, y_pion;
+
+            do {
+                selection_case(Plateau, &x_pion, &y_pion);
+                gotoxy(13*5, 3);
+                set_color(15, 0);
+                printf("%d  %d  ", Plateau[x_pion][y_pion].terre_ferme, Plateau[x_pion][y_pion].pions[0].equipe);
+            } while (Plateau[x_pion][y_pion].terre_ferme!=1 || Plateau[x_pion][y_pion].pions[0].equipe!=-1);
+            Plateau[x_pion][y_pion].pions[0] = pion_actuel;
+            afficher_casee(x_pion*5, y_pion*3, Plateau[x_pion][y_pion], 0);
+
+        }
+    }
+}
+
+void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < n_joueurs; j++) {
+            bateau bateau_actuel = bateau_null;
+            bateau_actuel.equipe_leader = -1; // -1 = aucun capitaine, -2 = vide
+
+            int x_bateau, y_bateau;
+            gotoxy(13 * 5, 2);
+            set_color(15, 0);
+            printf("JOUEUR %d: Selectionne ou placer un bateau", j);
+
+            do {
+                selection_case(Plateau, &x_bateau, &y_bateau);
+            } while ( (Plateau[x_bateau][y_bateau].terre_ferme==1) // check que on est sur la terre ferme
+                        ||(Plateau[x_bateau][y_bateau].creatures[0].type!=-1) // check que il y a une créature la
+                        ||!( // Check que aucune case asdjacente n'est de la terre ferme
+                           (Plateau[x_bateau+1][y_bateau+1].terre_ferme==1)
+                           ||(Plateau[x_bateau][y_bateau+1].terre_ferme==1)
+                            ||(Plateau[x_bateau-1][y_bateau+1].terre_ferme==1)
+                            ||(Plateau[x_bateau-1][y_bateau].terre_ferme==1)
+                            ||(Plateau[x_bateau-1][y_bateau-1].terre_ferme==1)
+                            ||(Plateau[x_bateau][y_bateau-1].terre_ferme==1)
+                            ||(Plateau[x_bateau+1][y_bateau-1].terre_ferme==1)
+                            ||(Plateau[x_bateau+1][y_bateau].terre_ferme==1)
+                           )
+                        );
+
+            Plateau[x_bateau][y_bateau].bateau = bateau_actuel;
+            afficher_casee(x_bateau*5, y_bateau*3, Plateau[x_bateau][y_bateau], 0);
+        }
+    }
+}
+

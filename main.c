@@ -17,7 +17,6 @@ int main()
     srand(time(NULL));
     initialiser_nulls();
     extern casee case_null;
-    extern joueur joueur_null;
     extern int socle[13][13];
     casee Plateau[13][13];
     initialiser_plateau(Plateau, case_null);
@@ -35,11 +34,9 @@ int main()
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+    placer_pions(Plateau, joueurs, n_joueurs);
+    placer_bateaux(Plateau, joueurs, n_joueurs);
 
-    //test débile:
-    int x_s, y_s;
-    selection_case(Plateau, &x_s, &y_s);
-    printf("%d %d", x_s ,y_s);
 
 
     return 0;

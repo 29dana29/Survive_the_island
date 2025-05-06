@@ -306,7 +306,9 @@ void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
             *x_s+=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
         } else if (key==13) { // Entrée
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0); //Enleve le tick de sélection de la case sélectinnée
             break; //Quitte la boucle, on garde donc la dernière case sélectionnée
+
         }
     }
 
