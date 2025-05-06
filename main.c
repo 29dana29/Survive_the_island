@@ -13,8 +13,9 @@
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
-    plein_ecran();
     curseur_visible(0);
+    plein_ecran();
+
     srand(time(NULL));
     initialiser_nulls();
     extern casee case_null;
@@ -23,7 +24,7 @@ int main()
     initialiser_plateau(Plateau, case_null);
     extern tuile deck_tuile[40];
     tuile tuiles[40];
-    memcpy(tuiles, deck_tuile, sizeof(tuiles)); // Copie des 40 éléments de deck_tuile dans tuiles
+    memcpy(tuiles, deck_tuile, sizeof(tuiles)); // Copie des 40 Ã©lÃ©ments de deck_tuile dans tuiles
     melanger_tuiles(tuiles);
     placer_tuiles(Plateau, tuiles, socle);
     placer_serpents(Plateau);
