@@ -7,50 +7,48 @@ int couleurs_equipe[4] = {4, 1, 2, 6};
 
 
 void plein_ecran() {
-    // Save the current cursor visibility state
+    // Sauvegarde l'état de visibilité du curseur
     CONSOLE_CURSOR_INFO cursorInfo;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    GetConsoleCursorInfo(hConsole, &cursorInfo);
-    int cursorVisible = cursorInfo.bVisible;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Récupère le handle de la console
+    GetConsoleCursorInfo(hConsole, &cursorInfo); // Lit les infos du curseur
+    int cursorVisible = cursorInfo.bVisible; // Stocke la visibilité actuelle
 
-    // Simulate Alt + Enter key combination to toggle fullscreen
-    keybd_event(VK_MENU, 0x38, 0, 0); // Press Alt
-    keybd_event(VK_RETURN, 0x1c, 0, 0); // Press Enter
-    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Release Enter
-    keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Release Alt
+    // Simule Alt + Entrée pour basculer en plein écran
+    keybd_event(VK_MENU, 0x38, 0, 0); // Appui Alt
+    keybd_event(VK_RETURN, 0x1c, 0, 0); // Appui Entrée
+    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Relâche Entrée
+    keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Relâche Alt
 
-    // Wait a short moment for the console to switch to fullscreen
-    Sleep(500);
+    // Pause pour laisser le mode plein écran s'activer
+    Sleep(500); // Attente 500 ms
 
-    // Restore the cursor visibility state
-    GetConsoleCursorInfo(hConsole, &cursorInfo);
-    cursorInfo.bVisible = cursorVisible;
-    SetConsoleCursorInfo(hConsole, &cursorInfo);
+    // Restaure la visibilité du curseur
+    GetConsoleCursorInfo(hConsole, &cursorInfo); // Relit les infos du curseur
+    cursorInfo.bVisible = cursorVisible; // Rétablit l'état initial
+    SetConsoleCursorInfo(hConsole, &cursorInfo); // Applique la modification
 }
+
 
 
 int get_input() {
-    /*
-    72 for Up Arrow
-    80 for Down Arrow
-    75 for Left Arrow
-    77 for Right Arrow
-    13 for Enter
-    27 for Escape
-    */
+    /* 72 Fleche Haut
+       80 Fleche Bas
+       75 Fleche Gauche
+       77 Fleche Droite
+       13 Entrée
+       27 Échap */
 
-    int key = getch();  // Retrieve the first key
+    int key = getch(); // Récupère la première touche
 
-    if (key == 224) { // If it's a special key (like an arrow key)
-        key = getch(); // Retrieve the actual special key code
-    }
+    if (key == 224)    // Touche spéciale (ex : flèche)
+        key = getch(); // Récupère le code réel
 
-    if (key == 27) { // Escape key
-        ExitProcess(0); // Immediately close the application
-    }
+    if (key == 27)     // Échap
+        ExitProcess(0); // Quitte immédiatement
 
-    return key;  // Return the key as usual
+    return key;        // Renvoie le code de la touche
 }
+
 
 
 // Fonction pour déplacer le curseur à la position spécifiée (x, y)

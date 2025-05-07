@@ -58,6 +58,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="plateau.h" />
+		<Unit filename="tours.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tours.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
