@@ -9,7 +9,7 @@
 #include "plateau.h"
 #include "initialisation.h"
 #include "cartes.h"
-
+#include "tours.h"
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
@@ -28,22 +28,31 @@ int main()
     melanger_tuiles(tuiles);
     placer_tuiles(Plateau, tuiles, socle);
     placer_serpents(Plateau);
+
+    /*Plateau[4][4].pions[0].equipe=0;
+    Plateau[4][4].pions[0].numero=1;
+    strcpy(Plateau[4][4].pions[0].nom, "A");
+    Plateau[3][4].bateau.equipe_leader=-1;*/
+
     for (int i = 0; i<13; i++) {
         for (int j = 0; j<13; j++) {
             afficher_casee(5*i, 3*j, Plateau[i][j], 0);
+
         }
     }
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+    rectangle(65, 0, 60, 39, 0);
+
+
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);
-    joueurs[0].cartes[0] = 2;
-    joueurs[0].cartes[1] = 6;
-    joueurs[0].cartes[2] = 2;
-    joueurs[0].cartes[3] = 3;
-    int i_carte;
-    choisir_carte(joueurs[0], &i_carte);
+    while (1) {
+        for(int i = 0; i<n_joueurs; i++) {
+            tour(&joueurs[i], Plateau);
+        }
+    }
 
 
     return 0;

@@ -177,15 +177,15 @@ void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
 
             pion_actuel.numero=val_pion;
             gotoxy(13*5, 2);
-            set_color(15, 0);
-            printf("JOUEUR %d: Selectionne ou tu veux placer ton pion de valeur %d", j, val_pion);
+            set_color(0, 15);
+            printf("JOUEUR %d: Selectionne ou tu veux placer ton pion %s de valeur %d", j, noms_pions[i], val_pion);
             int x_pion, y_pion;
 
             do {
                 selection_case(Plateau, &x_pion, &y_pion);
-                gotoxy(13*5, 3);
-                set_color(15, 0);
-                printf("%d  %d  ", Plateau[x_pion][y_pion].terre_ferme, Plateau[x_pion][y_pion].pions[0].equipe);
+                //gotoxy(13*5, 3);
+                //set_color(15, 0);
+                //printf("%d  %d  ", Plateau[x_pion][y_pion].terre_ferme, Plateau[x_pion][y_pion].pions[0].equipe);
             } while (Plateau[x_pion][y_pion].terre_ferme!=1 || Plateau[x_pion][y_pion].pions[0].equipe!=-1);
             Plateau[x_pion][y_pion].pions[0] = pion_actuel;
             afficher_casee(x_pion*5, y_pion*3, Plateau[x_pion][y_pion], 0);

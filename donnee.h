@@ -5,7 +5,7 @@
 typedef struct {
     int equipe; // 0 Rouge, 1 Bleu, 2 Vert, 3 Jaune
     int numero; //points de 1 -> 5
-    char nom[2]; // "A", "B"  pour reconnaitre sur le plateau
+    char nom[3]; // "A", "B"  pour reconnaitre sur le plateau
 } pion;
 
 typedef struct {
@@ -39,7 +39,7 @@ typedef struct {
 
 
 
-
+int compter_cartes(joueur j);
 int determiner_leader(bateau bateau);
-int compter_pions_couleur(casee case1, int couleur);
+int compter_pions_couleur(pion pions[], int couleur);
 #endif // DONNEE_H_INCLUDED
