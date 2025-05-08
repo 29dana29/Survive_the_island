@@ -131,6 +131,7 @@ pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *
     }
 }
 
+
 void tour(joueur *joueur, casee Plateau[13][13])
 {
     rectangle(65, 1, 60, 39, 0);
@@ -161,6 +162,10 @@ void tour(joueur *joueur, casee Plateau[13][13])
             int x_s, y_s;
             int x_d, y_d;
             pion *pion_source = selectionner_pion_sur_plateau(joueur, Plateau, &x_s, &y_s);
+            pion copie_pion_source = *pion_source;
+            *pion_source=pion_null;
+            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+
             pion *pion_arrivee;
             int valide = 0;
 
@@ -180,16 +185,24 @@ void tour(joueur *joueur, casee Plateau[13][13])
             }
 
             // Déplacement effectif du pion
-            *pion_arrivee = *pion_source;
-            *pion_source=pion_null;
+            *pion_arrivee = copie_pion_source;
+
+
             Plateau[x_s][y_s].bateau.equipe_leader = determiner_leader(Plateau[x_s][y_s].bateau);
             Plateau[x_d][y_d].bateau.equipe_leader = determiner_leader(Plateau[x_d][y_d].bateau);
+            gotoxy(85, 0);
+            set_color(12, 8);
+            printf("LEADER destination: %d   ", Plateau[x_d][y_d].bateau.equipe_leader);
             // Affichage des cases mises à jour
             afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
             afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
 
+            if (pion_arrivee!=pion_source) {
+                // CELA VERIFIE SI ON A VRAIMENT BOUGE LE PION
+                // SINON BAH PAS DE P_M EN MOINS
+                p_mouvement--;
 
-            p_mouvement--;
+            }
         }
         else // Déplacement de bateau (à implémenter plus tard)
         {
@@ -215,6 +228,9 @@ void tour(joueur *joueur, casee Plateau[13][13])
                     printf("Dont tu es le capitaine ou vide");
                 }
             }
+            bateau source_copie = Plateau[x_s][y_s].bateau;
+            Plateau[x_s][y_s].bateau = bateau_null;
+            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
             rectangle(65, 1, 60, 39, 0);
             gotoxy(70, 2);
             set_color(15, 0);
@@ -235,11 +251,13 @@ void tour(joueur *joueur, casee Plateau[13][13])
                     printf("Case invalide (doit être mer+adjacente+vide)");
                 }
             }
-            Plateau[x_d][y_d].bateau=Plateau[x_s][y_s].bateau;
-            Plateau[x_s][y_s].bateau=bateau_null;
+            Plateau[x_d][y_d].bateau=source_copie;
+            Plateau[x_d][y_d].bateau.equipe_leader=determiner_leader(Plateau[x_d][y_d].bateau);
             afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
             afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+            if (&Plateau[x_d][y_d].bateau!=&Plateau[x_s][y_s].bateau) {
             p_mouvement--;
+            }
 
         }
     }
