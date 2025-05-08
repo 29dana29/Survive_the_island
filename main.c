@@ -23,6 +23,7 @@ int main()
     srand(time(NULL));
     initialiser_nulls();
     extern casee case_null;
+    extern bateau bateau_null;
     extern int socle[13][13];
     casee Plateau[13][13];
     initialiser_plateau(Plateau, case_null);
@@ -37,18 +38,31 @@ int main()
     Plateau[4][4].pions[0].numero=1;
     strcpy(Plateau[4][4].pions[0].nom, "A");
     Plateau[3][4].bateau.equipe_leader=-1;*/
+    Plateau[2][1].creatures[0].type=1;
+    Plateau[2][1].creatures[1].type=2;
+    Plateau[1][0].pions[0].equipe=1;
+    Plateau[1][0].pions[0].numero=1;
+    Plateau[1][0].bateau = bateau_null;
+    Plateau[1][0].bateau.equipe_leader=-1;
 
+    //Plateau[1][0].bateau.pions[0].equipe=1;
     for (int i = 0; i<13; i++) {
         for (int j = 0; j<13; j++) {
             afficher_casee(5*i, 3*j, Plateau[i][j], 0);
 
         }
     }
+        set_color(3, 9);
+
+        printf("#####%d",compter_pions_couleur(Plateau[1][0].bateau.pions, 4));
+
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
 
+
     de_creature(Plateau);
+
 
 
     joueurs[0].cartes[0]=5;

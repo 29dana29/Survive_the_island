@@ -393,71 +393,88 @@ int action_baleine(casee Plateau[13][13], int x, int y)
     return proie;
 }
 
-void de_creature(casee Plateau[13][13]) {
+void de_creature(casee Plateau[13][13])
+{
     char * creatures[3] = {"Serpent", "Requin", "Baleine"};
     int type = 0;//rand()%3;
+    // Le nombre de mouvement de chaque créature c 1+ l'id de la créature
     int valide;
     rectangle(65, 1, 60, 39, 0);
     gotoxy(70, 0);
     set_color(4, 2);
     printf("De creature: %s", creatures[type]);
-    if (compter_creatures_plateau(Plateau, type) <= 0) {
-        gotoxy(70, 6);
+
+    if (compter_creatures_plateau(Plateau, type) <= 0)
+    {
+        gotoxy(19, 6);
         set_color(4, 3);
-        printf("Bah nan en fait, y'en a aucune sur le plato");
-    } else {
+
+        printf("%d Bah nan en fait, y'en a aucune sur le plato", compter_creatures_plateau(Plateau, type));
+    }
+    else
+    {
+        int proie = 0;
+        int p_mouvement = 1+type;// Le nombre de mouvement de chaque créature c 1+ l'id de la créature
         int x_s, y_s;
         creature *creature_source = selectionner_creature(Plateau, type, &x_s, &y_s);
-        int proie = 0;
-        switch (type) {
-    case 0: // serpent 1 SEUL MOUVEMENT
-        // selection case destination:
-        valide = 0;
-        int x_d, y_d;
-        gotoxy(70, 6);
-        set_color(4, 3);
-        printf("Selectionne une case adjacente comme destination");
-        while (valide==0) {
-            selection_case(Plateau, &x_d, &y_d);
-            if (abs(x_s - x_d) <= 1 && abs(y_s - y_d) <= 1 && Plateau[x_d][y_d].terre_ferme==0 && compter_creatures(Plateau[x_d][y_d], 3)<3) {
-                valide =1;
-            } else {
-            gotoxy(70, 7);
-        set_color(4, 3);
-        printf("Pas la place / pas mer / trop loin");
+
+
+        while (p_mouvement>0 && proie==0)
+        {
+            //Selection de la destination
+            valide = 0;
+            int x_d, y_d;
+            gotoxy(70, 6);
+            set_color(4, 3);
+            printf("Selectionne une case adjacente comme destination %d", p_mouvement);
+            while (valide==0)
+            {
+                selection_case(Plateau, &x_d, &y_d);
+                if (abs(x_s - x_d) <= 1 && abs(y_s - y_d) <= 1 && Plateau[x_d][y_d].terre_ferme==0 && compter_creatures(Plateau[x_d][y_d], 3)<3)
+                {
+                    valide =1;
+                }
+                else
+                {
+                    gotoxy(70, 7);
+                    set_color(4, 3);
+                    printf("Pas la place / pas mer / trop loin");
+                }
             }
-        }
-        // Deplacement + action
-        int indice_copie=0;
-        for (int i =0; i<3; i++) {
-            if (Plateau[x_d][y_d].creatures[i].type==-1) {
-                indice_copie=i;
+            int indice_copie=0;
+            for (int i =0; i<3; i++)
+            {
+                if (Plateau[x_d][y_d].creatures[i].type==-1)
+                {
+                    indice_copie=i;
+                    break;
+                }
+            }
+            Plateau[x_d][y_d].creatures[indice_copie] = *creature_source;
+            *creature_source = creature_null;
+
+            switch (type)
+            {
+            case 0:
+                proie=action_serpent(Plateau, x_d, y_d);
+                break;
+            case 1:
+                proie=action_requin(Plateau, x_d, y_d);
+                break;
+            case 2:
+                proie=action_baleine(Plateau, x_d, y_d);
                 break;
             }
-        }
-        Plateau[x_d][y_d].creatures[indice_copie] = *creature_source;
-        *creature_source = creature_null;
-        action_serpent(Plateau, x_d, y_d);
-        afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
-        afficher_casee(x_s*5, y_s*5, Plateau[x_s][y_s], 0);
+            afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
+            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
 
+            // L'actuelle destination devient la source du prochain déplacement
+            x_s = x_d;
+            y_s = y_d;
+            creature_source = &Plateau[x_d][y_d].creatures[indice_copie];
 
-        break;
-    case 1: // jusqu'a 2 mouvements avant proie
-
-        break;
-    case 2: // jusqu'a 3 mouvements avant proie
-
-        break;
-        }
-
-
-
-
-    }
-
-
-}
+            p_mouvement--;
+        }}}
 
 
 void tour(joueur *joueur, casee Plateau[13][13])

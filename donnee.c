@@ -41,18 +41,18 @@ int determiner_leader(bateau bateau)
     }
 }
 
-int compter_pions_couleur(pion pions[], int equipe)   // equipe=4: TOUTES LES EQUIPES
+int compter_pions_couleur(pion pions[], int equipe, int n)   // equipe=4: TOUTES LES EQUIPES
 {
-    int n = 0;
-    for (int i =0; i<40; i++)
+    int count = 0;
+    for (int i =0; i<n; i++)
     {
         if (pions[i].equipe == equipe)
         {
-            n+=1;
+            count+=1;
         }
         else if ((equipe==4)&&(pions[i].equipe!=-1))
         {
-            n+=1;
+            count+=1;
         }
     }
     return n;
@@ -88,4 +88,5 @@ int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: To
             count += compter_creatures(Plateau[i][j], type);
         }
     }
+    return count;
 }

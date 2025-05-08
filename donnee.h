@@ -43,5 +43,5 @@ int compter_creatures_plateau(casee Plateau[13][13], int type);
 
 int compter_cartes(joueur j);
 int determiner_leader(bateau bateau);
-int compter_pions_couleur(pion pions[], int couleur);
+int compter_pions_couleur(pion pions[], int couleur, int n);
 #endif // DONNEE_H_INCLUDED
