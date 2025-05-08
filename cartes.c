@@ -35,23 +35,21 @@ void jouer_carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
-<<<<<<< Updated upstream
-void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y) {
-    for(int i = -1; i < 1; i++)
+void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
+{
+    for (int i = -1; i <= 1; i++)
     {
-        for(int j = -1; j < 1; j++)
+        for (int j = -1; j <= 1; j++)
         {
-            if (Plateau[x+i][y+j].terre_ferme == 0)
+            if (x + i >= 0 && x + i < 13 && y + j >= 0 && y + j < 13)
             {
-                Plateau[x+i][y+j] = case_null;
+                if (Plateau[x+i][y+j].terre_ferme == 0)
+                {
+                    Plateau[x+i][y+j] = case_null;
+                }
             }
         }
     }
-=======
-void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
-{
-    // À implémenter
->>>>>>> Stashed changes
 }
 
 void jouer_carte_immediat_eruption(casee Plateau[13][13], int x, int y)
@@ -68,18 +66,13 @@ void jouer_carte_dauphin(casee Plateau[13][13], joueur *j)
     }
 }
 
-
-
 void jouer_carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
 {
-    /*
-    Deokacez un de vos bateaux jusqu'a 3 cases.
-    */
     rectangle(65, 1, 60, 39, 0);
     gotoxy(70, 1);
     printf("Carte deplacer bateau");
     int p_mouvements = 3;
-    while (p_mouvements>0)
+    while (p_mouvements > 0)
     {
         gotoxy(80, 1);
         printf("Mouvements: %d", p_mouvements);
@@ -108,7 +101,6 @@ void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
     if (id < 0 || id > 9) return;
     if (id <= 4)
     {
-        // Carte immédiate
         switch (id)
         {
         case 0:
@@ -130,12 +122,8 @@ void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
     }
     else
     {
-        // Carte à stocker
         int i = 0;
-        while ((*j).cartes[i] != -1)
-        {
-            i++;
-        }
+        while ((*j).cartes[i] != -1) i++;
         (*j).cartes[i] = id;
     }
     Plateau[x][y].tuile.carte = -1;
@@ -143,7 +131,6 @@ void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
 
 void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
 {
-
     int id = (*j).cartes[i_carte];
     if (id < 5 || id > 9) return;
     switch (id)
@@ -173,7 +160,6 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         }
         break;
     }
-
     case 6:
         jouer_carte_deplacer_bateau(Plateau, j);
         break;
@@ -192,9 +178,8 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
 
 void choisir_carte(joueur j, int *i_carte)
 {
-    char *type_cartes[11] =  // On augmente la taille pour inclure "Passer"
-    {
-        "Passer",               // Option pour passer
+    char *type_cartes[11] = {
+        "Passer",
         "Placer Requin",
         "Placer Baleine",
         "Placer Bateau",
@@ -226,30 +211,27 @@ void choisir_carte(joueur j, int *i_carte)
         return;
     }
 
-    // L'option "Passer" doit être en premier
-    char *options[n_cartes + 1];  // +1 pour l'option "Passer"
-
-    options[0] = type_cartes[0];  // "Passer"
-
+    char *options[n_cartes + 1];
+    options[0] = type_cartes[0];
     for (int i = 0; i < n_cartes; i++)
     {
-        options[i + 1] = type_cartes[carte_et_i[i][0] + 1];  // On décalle d'1 car "Passer" est déjà à l'index 0
+        options[i + 1] = type_cartes[carte_et_i[i][0] + 1];
     }
 
     int i_select = 0;
 
     gotoxy(75, 2);
     set_color(8, 4);
-    printf("Selectionne la carte que tu veux jouer (ou Passer).");
+    printf("Selectionne la carte que tu veux jouer (ou Passer).\n");
 
     selection_menu(75, 4, options, n_cartes + 1, &i_select);
 
-    if (i_select == 0)  // Si le joueur choisit "Passer"
+    if (i_select == 0)
     {
         *i_carte = -1;
     }
     else
     {
-        *i_carte = carte_et_i[i_select - 1][1];  // -1 pour accéder à la carte correcte
+        *i_carte = carte_et_i[i_select - 1][1];
     }
 }

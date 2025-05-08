@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1746702863 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
 	<windows.h>
 	<stdio.h>
 	<conio.h>
@@ -7,7 +7,7 @@
 
 1745063423 source:c:\users\titis\onedrive\documents\it\survive_the_island\plateau.c
 
-1746704659 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -38,7 +38,7 @@
 
 1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
-1746704548 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
 	"initialisation.h"
 	"donnee.h"
 	<stdlib.h>
@@ -107,7 +107,7 @@
 	"cartes.h"
 	"tours.h"
 
-1746707193 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
+1746714104 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
 	"donnee.h"
 	"affichage.h"
 	"cartes.h"
