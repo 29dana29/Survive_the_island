@@ -131,6 +131,112 @@ pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *
     }
 }
 
+void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int nageur) // NAGEUR 1/0 si il doit être un nageur et se deplacer dans l'eau
+{
+    int x_s, y_s;
+    int x_d, y_d;
+    int valide = 0;
+    pion *pion_source;
+    while (!valide)
+    {
+        pion_source = selectionner_pion_sur_plateau(joueur, Plateau, &x_s, &y_s);
+        if (nageur == 0 || Plateau[x_s][y_s].terre_ferme == 0)
+        {
+            valide = 1;
+        }
+    }
+
+    pion copie_pion_source = *pion_source;
+    *pion_source = pion_null;
+    afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+
+    pion *pion_arrivee;
+    valide=0;
+    while (!valide)
+    {
+        pion_arrivee = selectionner_emplacement_vide_pion(joueur, Plateau, &x_d, &y_d);
+        if ((abs(x_s - x_d) <= 1) && (abs(y_s - y_d) <= 1) &&
+                ((nageur == 0) || (Plateau[x_d][y_d].terre_ferme == 0))){ // Soit pas nageur soit c en MER
+            valide = 1;
+
+                }
+        else
+        {
+            gotoxy(75, 20);
+            set_color(12, 5);
+            printf("Selectionne une case adjacente");
+        }
+    }
+
+    *pion_arrivee = copie_pion_source;
+    Plateau[x_s][y_s].bateau.equipe_leader = determiner_leader(Plateau[x_s][y_s].bateau);
+    Plateau[x_d][y_d].bateau.equipe_leader = determiner_leader(Plateau[x_d][y_d].bateau);
+    afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+    afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
+
+    if (pion_arrivee != pion_source)
+        (*p_mouvement)--;
+}
+
+void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
+{
+    int x_s, y_s;
+    int x_d, y_d;
+    int valide = 0;
+
+    rectangle(65, 2, 60, 39, 0);
+    gotoxy(70, 2);
+    set_color(15, 0);
+    printf("Selectionne la case du bateau a bouger");
+
+    while (!valide)
+    {
+        selection_case(Plateau, &x_s, &y_s);
+        if (Plateau[x_s][y_s].bateau.equipe_leader == joueur->equipe || Plateau[x_s][y_s].bateau.equipe_leader == -1)
+            valide = 1;
+        else
+        {
+            gotoxy(70, 3);
+            set_color(15, 0);
+            printf("Dont tu es le capitaine ou vide");
+        }
+    }
+
+    bateau source_copie = Plateau[x_s][y_s].bateau;
+    Plateau[x_s][y_s].bateau = bateau_null;
+    afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+
+    rectangle(65, 1, 60, 39, 0);
+    gotoxy(70, 2);
+    set_color(15, 0);
+    printf("Selectionne la case ou bouger le bateau");
+
+    valide = 0;
+    while (!valide)
+    {
+        selection_case(Plateau, &x_d, &y_d);
+        if (abs(x_d - x_s) <= 1 && abs(y_d - y_s) <= 1 &&
+                Plateau[x_d][y_d].terre_ferme == 0 &&
+                Plateau[x_d][y_d].bateau.equipe_leader == -2)
+            valide = 1;
+        else
+        {
+            gotoxy(70, 6);
+            set_color(12, 0);
+            printf("Case invalide (doit être mer+adjacente+vide)");
+        }
+    }
+
+    Plateau[x_d][y_d].bateau = source_copie;
+    Plateau[x_d][y_d].bateau.equipe_leader = determiner_leader(Plateau[x_d][y_d].bateau);
+    afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
+    afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+
+    if (x_d != x_s || y_d != y_s)
+        (*p_mouvement)--;
+}
+
+
 
 void tour(joueur *joueur, casee Plateau[13][13])
 {
@@ -157,110 +263,10 @@ void tour(joueur *joueur, casee Plateau[13][13])
         printf("Il vous reste %d deplacement(s)", p_mouvement);
         selection_menu(70, 4, options, 2, &select_indice);
 
-        if (select_indice == 0) // Déplacement de pion
-        {
-            int x_s, y_s;
-            int x_d, y_d;
-            pion *pion_source = selectionner_pion_sur_plateau(joueur, Plateau, &x_s, &y_s);
-            pion copie_pion_source = *pion_source;
-            *pion_source=pion_null;
-            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
-
-            pion *pion_arrivee;
-            int valide = 0;
-
-            while (!valide)
-            {
-                pion_arrivee = selectionner_emplacement_vide_pion(joueur, Plateau, &x_d, &y_d);
-                if (abs(x_s - x_d) <= 1 && abs(y_s - y_d) <= 1)
-                {
-                    valide = 1;
-                }
-                else
-                {
-                    gotoxy(75, 20);
-                    set_color(12, 5);
-                    printf("Selectionne une case adjacente");
-                }
-            }
-
-            // Déplacement effectif du pion
-            *pion_arrivee = copie_pion_source;
-
-
-            Plateau[x_s][y_s].bateau.equipe_leader = determiner_leader(Plateau[x_s][y_s].bateau);
-            Plateau[x_d][y_d].bateau.equipe_leader = determiner_leader(Plateau[x_d][y_d].bateau);
-            gotoxy(85, 0);
-            set_color(12, 8);
-            printf("LEADER destination: %d   ", Plateau[x_d][y_d].bateau.equipe_leader);
-            // Affichage des cases mises à jour
-            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
-            afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
-
-            if (pion_arrivee!=pion_source) {
-                // CELA VERIFIE SI ON A VRAIMENT BOUGE LE PION
-                // SINON BAH PAS DE P_M EN MOINS
-                p_mouvement--;
-
-            }
-        }
-        else // Déplacement de bateau (à implémenter plus tard)
-        {
-            int x_s, y_s;
-            int x_d, y_d;
-            //bateau bateau;
-            int valide = 0;
-            rectangle(65, 1, 60, 39, 0);
-            gotoxy(70, 2);
-            set_color(15, 0);
-            printf("Selectionne la case du bateau a bouger");
-            while (valide == 0)
-            {
-                selection_case(Plateau, &x_s, &y_s);
-                if (Plateau[x_s][y_s].bateau.equipe_leader==(*joueur).equipe || Plateau[x_s][y_s].bateau.equipe_leader == -1)
-                {
-                    valide=1;
-                }
-                else
-                {
-                    gotoxy(70, 3);
-                    set_color(15, 0);
-                    printf("Dont tu es le capitaine ou vide");
-                }
-            }
-            bateau source_copie = Plateau[x_s][y_s].bateau;
-            Plateau[x_s][y_s].bateau = bateau_null;
-            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
-            rectangle(65, 1, 60, 39, 0);
-            gotoxy(70, 2);
-            set_color(15, 0);
-            printf("Selectionne la case ou bouger le bateau");
-            valide = 0; // nouvelle conditions
-            while (valide==0)
-            {
-                selection_case(Plateau, &x_d, &y_d);
-                //check que c a pas plus de 1 case d'ecart + que c'est bien une case de mer + que y'a pas de bateau
-                if ((x_d-x_s>=-1)&&(x_d-x_s<=1)&&(y_d-y_s>=-1)&&(y_d-y_s<=1)&&Plateau[x_d][y_d].terre_ferme==0&&Plateau[x_d][y_d].bateau.equipe_leader==-2)
-                {
-                    valide=1;
-                }
-                else
-                {
-                    gotoxy(70, 6);
-                    set_color(12, 0);
-                    printf("Case invalide (doit être mer+adjacente+vide)");
-                }
-            }
-            Plateau[x_d][y_d].bateau=source_copie;
-            Plateau[x_d][y_d].bateau.equipe_leader=determiner_leader(Plateau[x_d][y_d].bateau);
-            afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
-            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
-            if (&Plateau[x_d][y_d].bateau!=&Plateau[x_s][y_s].bateau) {
-            p_mouvement--;
-            }
-
-        }
+        if (select_indice == 0)
+            deplacer_pion(joueur, Plateau, &p_mouvement, 0);
+        else
+            deplacer_bateau(joueur, Plateau, &p_mouvement);
     }
+
 }
-
-

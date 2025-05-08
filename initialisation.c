@@ -166,7 +166,7 @@ void initialiser_joueurs(joueur joueurs[4], int *n_joueurs) {
 void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
 
     char * noms_pions[10]={"A","B","C","D","E","F","G","H","I","J"};
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<2; i++) {
         int val_pion = (i+2)/2; //Valeur Formule pas piquée des hannetons grace a division euclid, qui permet de veski toute une liste de pions
         for (int j = 0; j<n_joueurs; j++) {
 
@@ -207,7 +207,8 @@ void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
 
             do {
                 selection_case(Plateau, &x_bateau, &y_bateau);
-            } while ( (Plateau[x_bateau][y_bateau].terre_ferme==1) // check que on est sur la terre ferme
+            } while  ((Plateau[x_bateau][y_bateau].bateau.equipe_leader!=-2)|| // Si il y a deja un bateau
+                       (Plateau[x_bateau][y_bateau].terre_ferme==1) // check que on est sur la terre ferme
                         ||(Plateau[x_bateau][y_bateau].creatures[0].type!=-1) // check que il y a une créature la
                         ||!( // Check que aucune case asdjacente n'est de la terre ferme
                            (Plateau[x_bateau+1][y_bateau+1].terre_ferme==1)

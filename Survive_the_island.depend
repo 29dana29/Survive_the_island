@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1746666689 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+1746702863 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
 	<windows.h>
 	<stdio.h>
 	<conio.h>
@@ -7,7 +7,7 @@
 
 1745063423 source:c:\users\titis\onedrive\documents\it\survive_the_island\plateau.c
 
-1746669809 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+1746704659 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -38,7 +38,7 @@
 
 1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
-1746670648 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+1746704548 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
 	"initialisation.h"
 	"donnee.h"
 	<stdlib.h>
@@ -83,19 +83,22 @@
 
 1745063423 c:\users\titis\onedrive\documents\it\survive_the_island\plateau.h
 
-1746702238 source:c:\users\titis\onedrive\documents\it\survive_the_island\cartes.c
+1746709042 source:c:\users\titis\onedrive\documents\it\survive_the_island\cartes.c
 	"donnee.h"
 	"affichage.h"
 	"stdio.h"
 	"initialisation.h"
+	"tours.h"
 
-1746702198 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
+1746706995 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
 	"donnee.h"
 	"affichage.h"
 	"stdio.h"
+	"cartes.h"
 	"initialisation.h"
 
-1746560888 c:\users\titis\onedrive\documents\it\survive_the_island\cartes.h
+1746702375 c:\users\titis\onedrive\documents\it\survive_the_island\cartes.h
+	"donnee.h"
 
 1746641051 source:c:\users\titis\onedrive\documents\it\survive_the_island\deplacements.c
 	<stdio.h>
@@ -104,7 +107,7 @@
 	"cartes.h"
 	"tours.h"
 
-1746669757 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
+1746707193 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
 	"donnee.h"
 	"affichage.h"
 	"cartes.h"

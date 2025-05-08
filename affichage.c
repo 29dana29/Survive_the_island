@@ -163,7 +163,7 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     /* 5 x 3
     P1234  1 pion rouge, 2 bleu,
     SBR##
-    BBB##
+    PPP#X <- select (X)
     0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
     8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
 
@@ -191,7 +191,12 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
         set_color(0, 15);
         printf("X");
     }
+    gotoxy(x+4, y+1);
     set_color(0, couleur_fond);
+    if (case1.tuile.carte>=0) {
+            printf("%d", case1.tuile.carte);
+
+    }
     gotoxy(x, y);
     if (compter_pions_couleur(case1.pions, 0)+compter_pions_couleur(case1.pions, 1)+compter_pions_couleur(case1.pions, 2)+compter_pions_couleur(case1.pions, 3) != 0) {
        printf("P");

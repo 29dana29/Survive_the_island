@@ -10,6 +10,10 @@
 #include "initialisation.h"
 #include "cartes.h"
 #include "tours.h"
+
+int jeu = 1;
+
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
@@ -43,12 +47,14 @@ int main()
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+    joueurs[0].cartes[0]=5;
+    joueurs[0].cartes[1]=6;
     rectangle(65, 0, 60, 39, 0);
 
 
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);
-    while (1) {
+    while (jeu==1) {
         for(int i = 0; i<n_joueurs; i++) {
             tour(&joueurs[i], Plateau);
         }
