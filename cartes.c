@@ -227,6 +227,7 @@ void choisir_carte(joueur j, int *i_carte)
     selection_menu(75, 4, options, n_cartes + 1, &i_select);
 
     if (i_select == 0)
+
     {
         *i_carte = -1;
     }
