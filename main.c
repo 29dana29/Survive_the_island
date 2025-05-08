@@ -12,7 +12,7 @@
 #include "tours.h"
 
 int jeu = 1;
-
+int montee_eaux = 0; // 0:On eneleve que la plage, 1:On enleve les forets, 2:On eneleve les montagnes
 
 int main()
 {
@@ -48,10 +48,13 @@ int main()
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
 
+    de_creature(Plateau);
 
 
     joueurs[0].cartes[0]=5;
     joueurs[0].cartes[1]=6;
+    joueurs[0].cartes[2]=7;
+
     rectangle(65, 0, 60, 39, 0);
     gotoxy(75, 20);
 

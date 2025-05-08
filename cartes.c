@@ -102,30 +102,43 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
     while (!valide)
     {
         selection_case(Plateau, &x_d, &y_d);
-        if (Plateau[x_d][y_d].terre_ferme==0)
+        if ((Plateau[x_d][y_d].terre_ferme==0) && (compter_creatures(Plateau[x_d][y_d], 3)<3)) // Si mer + pas pleine
         {
             valide = 1;
         }
         else
         {
             gotoxy(69, 3);
-            printf("Ce n'est pas une case de mer. Réessaie.");
+            printf("Ce n'est pas une case de mer valide. Réessaie.");
         }
     }
 
-    // Déplacement effectif
+    // Déplacement réel
     for (int i = 0; i < 3; i++)
     {
         if (Plateau[x_d][y_d].creatures[i].type == -1)
         {
             Plateau[x_d][y_d].creatures[i] = *c;
+            switch(Plateau[x_d][y_d].creatures[i].type) { // Pour gérer l'action
+        case 0: // serpent
+            action_serpent(Plateau, x_d, y_d);
+            break;
+        case 1: // requin
+            action_requin(Plateau, x_d, y_d);
+            break;
+        case 2: // Balein
+            action_baleine(Plateau, x_d, y_d);
+            break;
+            }
             (*c).type = -1; // Suppression de la créature de sa case d'origine
+            afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
+            afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
             break;
         }
     }
 }
 
-void carte_deplacement_creature(casee Plateau[13][13], joueur *j)
+void carte_de_creature(casee Plateau[13][13], joueur *j)
 {
     // À implémenter
 }
@@ -204,10 +217,10 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         carte_deplacer_bateau(Plateau, j);
         break;
     case 7:
-        //jouer_carte_plongeon(Plateau, j);
+        carte_plongeon(Plateau, j);
         break;
     case 8:
-        carte_deplacement_creature(Plateau, j);
+        carte_de_creature(Plateau, j);
         break;
     case 9:
         carte_repulsif(Plateau, j);

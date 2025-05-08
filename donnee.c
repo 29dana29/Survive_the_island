@@ -70,3 +70,22 @@ int compter_cartes(joueur j)
     }
     return count;
 }
+
+int compter_creatures(casee case1, int type) { // type=3: Toute créature
+    // compte forcément dans une case donc forcément 3 emplacements
+    int count = 0;
+    for (int i =0; i<3; i++) {
+        if (case1.creatures[i].type==type || (type==3 && case1.creatures[i].type!=-1)) {
+            count ++;
+        }
+    }
+    return count;
+}
+int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: Toute créature
+    int count =0;
+    for (int i = 0; i<13; i++) {
+        for (int j = 0; j <13; j++) {
+            count += compter_creatures(Plateau[i][j], type);
+        }
+    }
+}

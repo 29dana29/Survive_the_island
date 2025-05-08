@@ -38,6 +38,8 @@ typedef struct {
 } joueur;
 
 
+int compter_creatures(casee case1, int type);
+int compter_creatures_plateau(casee Plateau[13][13], int type);
 
 int compter_cartes(joueur j);
 int determiner_leader(bateau bateau);
