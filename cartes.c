@@ -6,9 +6,10 @@
 
 extern pion pion_null;
 extern casee case_null;
+extern int jeu;
 
 // Fonctions de jeu pour chaque carte
-void jouer_carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
+void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 {
     int i;
     for (int j = 0; j < 40; j++)
@@ -21,7 +22,7 @@ void jouer_carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
-void jouer_carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
+void carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
 {
     int i = 0;
     while (Plateau[x][y].creatures[i].type != -1) i++;
@@ -29,13 +30,13 @@ void jouer_carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
-void jouer_carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
+void carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
 {
     Plateau[x][y].bateau.equipe_leader = -2;
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
-void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
+void carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
 {
     for (int i = -1; i <= 1; i++)
     {
@@ -52,12 +53,12 @@ void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
     }
 }
 
-void jouer_carte_immediat_eruption(casee Plateau[13][13], int x, int y)
+void carte_immediat_eruption(casee Plateau[13][13], int x, int y)
 {
-    // À implémenter
+    jeu = 0;
 }
 
-void jouer_carte_dauphin(casee Plateau[13][13], joueur *j)
+void carte_dauphin(casee Plateau[13][13], joueur *j)
 {
     int mouvements = 3;
     while (mouvements > 0)
@@ -66,7 +67,7 @@ void jouer_carte_dauphin(casee Plateau[13][13], joueur *j)
     }
 }
 
-void jouer_carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
+void carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
 {
     rectangle(65, 1, 60, 39, 0);
     gotoxy(70, 1);
@@ -80,19 +81,58 @@ void jouer_carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
     }
 }
 
-void jouer_carte_plongeon(casee Plateau[13][13], joueur *j)
+void carte_plongeon(casee Plateau[13][13], joueur *j)
+{
+    /*
+    Déplacer n'importe quelle créature sur n'importe quelle case de mer.
+    */
+
+    int x_s, y_s;
+    creature *c = selectionner_creature(Plateau, -1, &x_s, &y_s);
+    if (c == NULL) return;
+
+    // Sélection de la case de destination
+    int x_d, y_d;
+    int valide = 0;
+
+    rectangle(65, 1, 60, 39, 0);
+    gotoxy(69, 1);
+    printf("Sélectionne la case de destination (case de mer).");
+
+    while (!valide)
+    {
+        selection_case(Plateau, &x_d, &y_d);
+        if (Plateau[x_d][y_d].terre_ferme==0)
+        {
+            valide = 1;
+        }
+        else
+        {
+            gotoxy(69, 3);
+            printf("Ce n'est pas une case de mer. Réessaie.");
+        }
+    }
+
+    // Déplacement effectif
+    for (int i = 0; i < 3; i++)
+    {
+        if (Plateau[x_d][y_d].creatures[i].type == -1)
+        {
+            Plateau[x_d][y_d].creatures[i] = *c;
+            (*c).type = -1; // Suppression de la créature de sa case d'origine
+            break;
+        }
+    }
+}
+
+void carte_deplacement_creature(casee Plateau[13][13], joueur *j)
 {
     // À implémenter
 }
 
-void jouer_carte_deplacement_creature(casee Plateau[13][13], joueur *j)
+void carte_repulsif(casee Plateau[13][13], joueur *j)
 {
-    // À implémenter
-}
-
-void jouer_carte_repulsif(casee Plateau[13][13], joueur *j)
-{
-    // À implémenter
+    printf("REPULSIF");
 }
 
 void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
@@ -104,19 +144,19 @@ void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
         switch (id)
         {
         case 0:
-            jouer_carte_immediat_placer_requin(Plateau, x, y);
+            carte_immediat_placer_requin(Plateau, x, y);
             break;
         case 1:
-            jouer_carte_immediat_placer_baleine(Plateau, x, y);
+            carte_immediat_placer_baleine(Plateau, x, y);
             break;
         case 2:
-            jouer_carte_immediat_placer_bateau(Plateau, x, y);
+            carte_immediat_placer_bateau(Plateau, x, y);
             break;
         case 3:
-            jouer_carte_immediat_tourbillon(Plateau, x, y);
+            carte_immediat_tourbillon(Plateau, x, y);
             break;
         case 4:
-            jouer_carte_immediat_eruption(Plateau, x, y);
+            carte_immediat_eruption(Plateau, x, y);
             break;
         }
     }
@@ -150,7 +190,7 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         }
         if (nageur_trouve)
         {
-            jouer_carte_dauphin(Plateau, j);
+            carte_dauphin(Plateau, j);
         }
         else
         {
@@ -161,16 +201,16 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         break;
     }
     case 6:
-        jouer_carte_deplacer_bateau(Plateau, j);
+        carte_deplacer_bateau(Plateau, j);
         break;
     case 7:
-        jouer_carte_plongeon(Plateau, j);
+        //jouer_carte_plongeon(Plateau, j);
         break;
     case 8:
-        jouer_carte_deplacement_creature(Plateau, j);
+        carte_deplacement_creature(Plateau, j);
         break;
     case 9:
-        jouer_carte_repulsif(Plateau, j);
+        carte_repulsif(Plateau, j);
         break;
     }
     (*j).cartes[i_carte] = -1;

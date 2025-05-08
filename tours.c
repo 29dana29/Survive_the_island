@@ -131,6 +131,79 @@ pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *
     }
 }
 
+creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int *x_i, int *y_i)
+{
+    /*
+    Permet de sélectionner une créature sur le plateau, avec option de restriction sur le type.
+    Retourne un pointeur vers la créature sélectionnée, ou NULL si aucune n’est disponible.
+    */
+
+    rectangle(65, 1, 60, 39, 0);
+    gotoxy(69, 1);
+    printf("Sélectionne la case contenant la créature à déplacer.");
+
+    int x_s, y_s;
+    int valide = 0;
+
+    while (!valide)
+    {
+        selection_case(Plateau, &x_s, &y_s);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (Plateau[x_s][y_s].creatures[i].type != -1 &&
+               (type_restriction == -1 || Plateau[x_s][y_s].creatures[i].type == type_restriction))
+            {
+                valide = 1;
+                break;
+            }
+        }
+
+        if (!valide)
+        {
+            gotoxy(69, 3);
+            printf("Aucune créature valide ici. Choisis une autre case.");
+        }
+    }
+
+    char *option_creatures[] = {"Serpent", "Requin", "Baleine"};
+    int creatures_et_i[3]; // Max 3 créatures par case
+    int n_creatures = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        int t = Plateau[x_s][y_s].creatures[i].type;
+        if (t != -1 && (type_restriction == -1 || t == type_restriction))
+        {
+            creatures_et_i[n_creatures] = i;
+            n_creatures++;
+        }
+    }
+
+    if (n_creatures == 0)
+    {
+        return NULL;
+    }
+
+    char *options[n_creatures];
+    for (int i = 0; i < n_creatures; i++)
+    {
+        options[i] = option_creatures[Plateau[x_s][y_s].creatures[creatures_et_i[i]].type];
+    }
+
+    rectangle(65, 1, 60, 39, 0);
+    gotoxy(75, 2);
+    set_color(5, 4);
+    printf("Sélectionne la créature que tu veux bouger");
+
+    int i_select = 0;
+    selection_menu(75, 4, options, n_creatures, &i_select);
+    *x_i = x_s;
+    *y_i = y_s;
+    return &Plateau[x_s][y_s].creatures[creatures_et_i[i_select]];
+}
+
+
 void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int nageur) // NAGEUR 1/0 si il doit être un nageur et se deplacer dans l'eau
 {
     int x_s, y_s;

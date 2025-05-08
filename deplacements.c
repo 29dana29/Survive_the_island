@@ -15,7 +15,4 @@ RESTRICTION:
 8: Serpent + Requin + Baleine
 
 */
-void selection_entitee(casee Plateau[13][13], joueur *joueur) {
-printf("SElectionne une entité");
 
-}

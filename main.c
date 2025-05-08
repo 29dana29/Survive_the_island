@@ -47,9 +47,13 @@ int main()
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+
+
+
     joueurs[0].cartes[0]=5;
     joueurs[0].cartes[1]=6;
     rectangle(65, 0, 60, 39, 0);
+    gotoxy(75, 20);
 
 
     placer_pions(Plateau, joueurs, n_joueurs);
