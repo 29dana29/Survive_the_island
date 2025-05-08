@@ -37,7 +37,7 @@ typedef struct {
     int p_mouvement;
 } joueur;
 
-
+int deter_montee_eaux(casee Plateau[13][13]);
 int compter_creatures(casee case1, int type);
 int compter_creatures_plateau(casee Plateau[13][13], int type);
 

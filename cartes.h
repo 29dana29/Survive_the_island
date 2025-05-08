@@ -6,6 +6,7 @@
 void choisir_carte(joueur joueur, int *i_carte);
 void jouer_carte(casee Plateau[13][13], joueur *joueur, int i_carte);
 void jouer_carte_immediate(casee Plateau[13][13], joueur *joueur, int i_carte, int x_carte, int y_carte);
+void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y);
 
 // Fonctions des cartes immédiates
 void carte_placer_requin(casee Plateau[13][13], int x, int y);

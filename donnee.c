@@ -90,3 +90,17 @@ int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: To
     }
     return count;
 }
+
+int deter_montee_eaux(casee Plateau[13][13]) {
+    int montee = 2; // set au max
+    for (int i=0; i<13; i++) {
+        for (int j = 0; j<13; j++) {
+            if (montee==2&&Plateau[i][j].tuile.type==1) { // Forêt
+                montee = 1;
+            } else if (Plateau[i][j].tuile.type==0) {
+                montee = 0;
+            }
+        }
+    }
+    return montee;
+}

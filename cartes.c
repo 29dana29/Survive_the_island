@@ -11,33 +11,35 @@ extern int jeu;
 // Fonctions de jeu pour chaque carte
 void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 {
-    int i;
-    for (int j = 0; j < 40; j++)
-    {
-        Plateau[x][y].pions[j] = pion_null;
-    }
-    i = 0;
-    while (Plateau[x][y].creatures[i].type != -1) i++;
-    Plateau[x][y].creatures[i].type = 1;
+        gotoxy(75, 22);
+    printf("Placer requin");
+    Plateau[x][y].creatures[0].type = 1;
+    action_requin(Plateau, x, y);
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
 void carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
 {
-    int i = 0;
-    while (Plateau[x][y].creatures[i].type != -1) i++;
-    Plateau[x][y].creatures[i].type = 2;
+    //pas besoin de check pour les emplacement  vide comme c'etait un tuile terre ferme
+        gotoxy(75, 22);
+    printf("Placer baleine");
+    Plateau[x][y].creatures[0].type = 2;
+    action_baleine(Plateau, x, y);
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
 void carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
 {
-    Plateau[x][y].bateau.equipe_leader = -2;
+    gotoxy(75, 22);
+    printf("Placer bateau");
+    Plateau[x][y].bateau.equipe_leader = -1;
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
 void carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
 {
+    gotoxy(75, 22);
+    printf("Oh purée, tourbillon.");
     for (int i = -1; i <= 1; i++)
     {
         for (int j = -1; j <= 1; j++)
@@ -55,11 +57,18 @@ void carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
 
 void carte_immediat_eruption(casee Plateau[13][13], int x, int y)
 {
+    rectangle(65, 1, 60, 39, 0);
+
+    gotoxy(80, 1);
+    set_color(0, 15);
+    printf("Oh non, la lave qui coule ! C'est fini.");
     jeu = 0;
 }
 
 void carte_dauphin(casee Plateau[13][13], joueur *j)
 {
+    gotoxy(75, 22);
+    printf("Un dauphin a la rescousse !");
     int mouvements = 3;
     while (mouvements > 0)
     {
@@ -70,8 +79,8 @@ void carte_dauphin(casee Plateau[13][13], joueur *j)
 void carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
 {
     rectangle(65, 1, 60, 39, 0);
-    gotoxy(70, 1);
-    printf("Carte deplacer bateau");
+    gotoxy(75, 22);
+    printf("Les vents favorables !");
     int p_mouvements = 3;
     while (p_mouvements > 0)
     {
@@ -86,7 +95,8 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
     /*
     Déplacer n'importe quelle créature sur n'importe quelle case de mer.
     */
-
+    gotoxy(75, 22);
+    printf("Plongeon ?");
     int x_s, y_s;
     creature *c = selectionner_creature(Plateau, -1, &x_s, &y_s);
     if (c == NULL) return;
@@ -140,7 +150,10 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
 
 void carte_de_creature(casee Plateau[13][13], joueur *j)
 {
-    // À implémenter
+    rectangle(65, 1, 60, 39, 0);
+    gotoxy(75, 22);
+    printf("Lance le de creature...");
+de_creature(Plateau);
 }
 
 void carte_repulsif(casee Plateau[13][13], joueur *j)
@@ -148,9 +161,9 @@ void carte_repulsif(casee Plateau[13][13], joueur *j)
     printf("REPULSIF");
 }
 
-void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
+void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y)
 {
-    int id = Plateau[x][y].tuile.carte;
+    int id = case1.tuile.carte;
     if (id < 0 || id > 9) return;
     if (id <= 4)
     {
@@ -179,7 +192,6 @@ void obtenir_carte(casee Plateau[13][13], joueur *j, int x, int y)
         while ((*j).cartes[i] != -1) i++;
         (*j).cartes[i] = id;
     }
-    Plateau[x][y].tuile.carte = -1;
 }
 
 void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)

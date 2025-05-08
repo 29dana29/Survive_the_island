@@ -7,6 +7,8 @@
 extern bateau bateau_null;
 extern pion pion_null;
 extern creature creature_null;
+extern tuile tuile_null;
+extern int montee_eaux;
 
 pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,int *y_i)
 {
@@ -243,12 +245,20 @@ void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int 
             printf("Selectionne une case adjacente");
         }
     }
+    if ((x_d==12||x_d==0)&&(y_d==12||y_d==0)) { // Si c'est un coin
+        (*joueur).points+=copie_pion_source.numero; // augmentation du score
+        gotoxy(75, 22);
+        set_color(0, 15);
+        printf("+1 pion sauvé !");
 
-    *pion_arrivee = copie_pion_source;
+    } else { // Si c'est pas un coin
+        *pion_arrivee = copie_pion_source;
+    }
     Plateau[x_s][y_s].bateau.equipe_leader = determiner_leader(Plateau[x_s][y_s].bateau);
     Plateau[x_d][y_d].bateau.equipe_leader = determiner_leader(Plateau[x_d][y_d].bateau);
     afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
     afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
+
 
     if (pion_arrivee != pion_source)
         (*p_mouvement)--;
@@ -476,6 +486,26 @@ void de_creature(casee Plateau[13][13])
             p_mouvement--;
         }}}
 
+void enelever_tuile(joueur *joueur, casee Plateau[13][13]) {
+    int valide = 0;
+        gotoxy(75, 2);
+    printf("Choisi une tuile à enlever!");
+            int x_s, y_s;
+
+    while (valide==0) {
+        selection_case(Plateau, &x_s, &y_s);
+        if ((Plateau[x_s][y_s].terre_ferme==1)&&(Plateau[x_s][y_s].tuile.type==montee_eaux)) {
+            valide = 1;
+        } else {
+            printf("Pas valide.");
+        }
+    }
+    casee copie1 = Plateau[x_s][y_s];
+    Plateau[x_s][y_s].tuile=tuile_null;
+    Plateau[x_s][y_s].terre_ferme=0;
+    obtenir_carte(Plateau, copie1, joueur, x_s, y_s);
+    montee_eaux = deter_montee_eaux(Plateau);
+}
 
 void tour(joueur *joueur, casee Plateau[13][13])
 {
@@ -513,5 +543,6 @@ void tour(joueur *joueur, casee Plateau[13][13])
     }
 
     // ############# ENLEVER TUILE
+    enelever_tuile(joueur, Plateau);
 
 }
