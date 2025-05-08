@@ -4,6 +4,7 @@
 #include "initialisation.h"
 
 extern pion pion_null;
+extern casee case_null;
 
 // Fonctions de jeu pour chaque carte
 void jouer_carte_immediat_placer_requin(casee Plateau[13][13], int x, int y) {
@@ -30,7 +31,16 @@ void jouer_carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y) {
 }
 
 void jouer_carte_immediat_tourbillon(casee Plateau[13][13], int x, int y) {
-    // À implémenter
+    for(int i = -1; i < 1; i++)
+    {
+        for(int j = -1; j < 1; j++)
+        {
+            if (Plateau[x+i][y+j].terre_ferme == 0)
+            {
+                Plateau[x+i][y+j] = case_null;
+            }
+        }
+    }
 }
 
 void jouer_carte_immediat_eruption(casee Plateau[13][13], int x, int y) {
