@@ -1,5 +1,9 @@
 # depslib dependency file v1.0
+<<<<<<< Updated upstream
 1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+=======
+1746702863 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+>>>>>>> Stashed changes
 	<windows.h>
 	<stdio.h>
 	<conio.h>
@@ -7,7 +11,11 @@
 
 1745063423 source:c:\users\titis\onedrive\documents\it\survive_the_island\plateau.c
 
+<<<<<<< Updated upstream
 1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+=======
+1746704659 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+>>>>>>> Stashed changes
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -38,7 +46,11 @@
 
 1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
+<<<<<<< Updated upstream
 1746714104 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+=======
+1746704548 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+>>>>>>> Stashed changes
 	"initialisation.h"
 	"donnee.h"
 	<stdlib.h>
@@ -107,7 +119,11 @@
 	"cartes.h"
 	"tours.h"
 
+<<<<<<< Updated upstream
 1746714104 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
+=======
+1746707193 c:\users\titis\onedrive\documents\it\survive_the_island\tours.h
+>>>>>>> Stashed changes
 	"donnee.h"
 	"affichage.h"
 	"cartes.h"
