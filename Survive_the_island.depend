@@ -83,17 +83,16 @@
 
 1745063423 c:\users\titis\onedrive\documents\it\survive_the_island\plateau.h
 
-1746638103 source:c:\users\titis\onedrive\documents\it\survive_the_island\cartes.c
+1746702238 source:c:\users\titis\onedrive\documents\it\survive_the_island\cartes.c
 	"donnee.h"
 	"affichage.h"
 	"stdio.h"
 	"initialisation.h"
 
-1746698834 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
+1746702198 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
 	"donnee.h"
 	"affichage.h"
 	"stdio.h"
-	"cartes.h"
 	"initialisation.h"
 
 1746560888 c:\users\titis\onedrive\documents\it\survive_the_island\cartes.h
