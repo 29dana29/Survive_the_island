@@ -198,52 +198,52 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
 
     }
     gotoxy(x, y);
-    if (compter_pions_couleur(case1.pions, 0)+compter_pions_couleur(case1.pions, 1)+compter_pions_couleur(case1.pions, 2)+compter_pions_couleur(case1.pions, 3) != 0) {
+    if (compter_pions_couleur(case1.pions, 0, 40)+compter_pions_couleur(case1.pions, 1, 40)+compter_pions_couleur(case1.pions, 2, 40)+compter_pions_couleur(case1.pions, 3, 40) != 0) {
        printf("P");
     }
     // ROUGE:
     gotoxy(x+1, y);
     set_color(4, couleur_fond); //Rouge sur fond.
-    if (compter_pions_couleur(case1.pions, 0) == 10)
+    if (compter_pions_couleur(case1.pions, 0, 40) == 10)
     {
         printf("X");
     }
-    else if (compter_pions_couleur(case1.pions, 0) != 0)
+    else if (compter_pions_couleur(case1.pions, 0, 40) != 0)
     {
-        printf("%d", compter_pions_couleur(case1.pions, 0));
+        printf("%d", compter_pions_couleur(case1.pions, 0, 40));
     }
     // BLEU
     gotoxy(x+2, y);
     set_color(1, couleur_fond); // Bleu sur fond.
-    if (compter_pions_couleur(case1.pions, 1) == 10)
+    if (compter_pions_couleur(case1.pions, 1, 40) == 10)
     {
         printf("X");
     }
-    else if (compter_pions_couleur(case1.pions, 1) != 0)
+    else if (compter_pions_couleur(case1.pions, 1, 40) != 0)
     {
-        printf("%d", compter_pions_couleur(case1.pions, 1));
+        printf("%d", compter_pions_couleur(case1.pions, 1, 40));
     }
     // VERT
     gotoxy(x+3, y);
     set_color(2, couleur_fond); // Vert sur fond.
-    if (compter_pions_couleur(case1.pions, 2) == 10)
+    if (compter_pions_couleur(case1.pions, 2, 40) == 10)
     {
         printf("X");
     }
-    else if (compter_pions_couleur(case1.pions, 2) != 0)
+    else if (compter_pions_couleur(case1.pions, 2, 40) != 0)
     {
-        printf("%d", compter_pions_couleur(case1.pions, 2));
+        printf("%d", compter_pions_couleur(case1.pions, 2, 40));
     }
     // JAUNE
     gotoxy(x+4, y);
     set_color(6, couleur_fond); // JauneF
-    if (compter_pions_couleur(case1.pions, 3) == 10)
+    if (compter_pions_couleur(case1.pions, 3, 40) == 10)
     {
         printf("X");
     }
-    else if (compter_pions_couleur(case1.pions, 3) != 0)
+    else if (compter_pions_couleur(case1.pions, 3, 40) != 0)
     {
-        printf("%d", compter_pions_couleur(case1.pions, 3));
+        printf("%d", compter_pions_couleur(case1.pions, 3, 40));
     }
 
     // #################BATEAU ######################

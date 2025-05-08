@@ -10,8 +10,8 @@ void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int 
 void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement);
 creature* selectionner_creature(casee Plateau[13][13], int type_restriction, int *x_i, int *y_i);
 void de_creature(casee Plateau[13][13]);
-int action_serpent(casee Plateau[13][13], int x, int y);
-int action_requin(casee Plateau[13][13], int x, int y);
+int action_serpent(casee Plateau[13][13], int x, int y); // CHECK
+int action_requin(casee Plateau[13][13], int x, int y); // CHECK
 int action_baleine(casee Plateau[13][13], int x, int y);
 
 

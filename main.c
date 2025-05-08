@@ -45,7 +45,7 @@ int main()
     Plateau[1][0].bateau = bateau_null;
     Plateau[1][0].bateau.equipe_leader=-1;
 
-    //Plateau[1][0].bateau.pions[0].equipe=1;
+    Plateau[1][0].bateau.pions[0].equipe=1;
     for (int i = 0; i<13; i++) {
         for (int j = 0; j<13; j++) {
             afficher_casee(5*i, 3*j, Plateau[i][j], 0);
@@ -54,7 +54,7 @@ int main()
     }
         set_color(3, 9);
 
-        printf("#####%d",compter_pions_couleur(Plateau[1][0].bateau.pions, 4));
+        printf("#####%d",compter_pions_couleur(Plateau[1][0].bateau.pions, 4, 3));
 
     int n_joueurs=0;
     joueur joueurs[4];

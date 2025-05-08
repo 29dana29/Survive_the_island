@@ -195,7 +195,7 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         {
             for (int y = 0; y < 13 && !nageur_trouve; y++)
             {
-                if (Plateau[x][y].terre_ferme == 0 && compter_pions_couleur(Plateau[x][y].pions, (*j).equipe) >= 1)
+                if (Plateau[x][y].terre_ferme == 0 && compter_pions_couleur(Plateau[x][y].pions, (*j).equipe, 40) >= 1)
                 {
                     nageur_trouve = 1;
                 }

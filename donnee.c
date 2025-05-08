@@ -55,7 +55,7 @@ int compter_pions_couleur(pion pions[], int equipe, int n)   // equipe=4: TOUTES
             count+=1;
         }
     }
-    return n;
+    return count;
 }
 
 int compter_cartes(joueur j)

@@ -21,7 +21,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 
         selection_case(Plateau, &x_s, &y_s);
 
-        if ((compter_pions_couleur(Plateau[x_s][y_s].pions, (*j).equipe) + compter_pions_couleur(Plateau[x_s][y_s].bateau.pions, (*j).equipe)) >= 1)
+        if ((compter_pions_couleur(Plateau[x_s][y_s].pions, (*j).equipe, 40) + compter_pions_couleur(Plateau[x_s][y_s].bateau.pions, (*j).equipe, 40)) >= 1)
         {
             valide = 1;
         }
@@ -313,7 +313,7 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
 }
 
 
-int action_serpent(casee Plateau[13][13], int x, int y)
+int action_serpent(casee Plateau[13][13], int x, int y) // Verifiée
 {
     int proie = 0;
 
@@ -327,8 +327,8 @@ int action_serpent(casee Plateau[13][13], int x, int y)
         }
     }
 
-    // Supprimer bateau s'il existe
-    if (Plateau[x][y].bateau.equipe_leader != -2)
+    // Supprimer bateau s'il n'est pas vide
+    if (compter_pions_couleur(Plateau[x][y].bateau.pions, 4, 3) >0)
     {
         Plateau[x][y].bateau = bateau_null;
         proie = 1;
@@ -396,7 +396,7 @@ int action_baleine(casee Plateau[13][13], int x, int y)
 void de_creature(casee Plateau[13][13])
 {
     char * creatures[3] = {"Serpent", "Requin", "Baleine"};
-    int type = 0;//rand()%3;
+    int type = 2;//rand()%3;
     // Le nombre de mouvement de chaque créature c 1+ l'id de la créature
     int valide;
     rectangle(65, 1, 60, 39, 0);
