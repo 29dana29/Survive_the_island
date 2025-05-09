@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
 1 <<<<<<< Updated upstream
 
-1746752394 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
+1746784289 source:c:\users\titis\onedrive\documents\it\survive_the_island\affichage.c
 	<windows.h>
 	<stdio.h>
+	<stdlib.h>
 	<conio.h>
 	"donnee.h"
 
@@ -37,7 +38,7 @@
 
 1746641051 ated upstream
 
-1746751958 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
+1746784293 source:c:\users\titis\onedrive\documents\it\survive_the_island\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -68,7 +69,7 @@
 
 1745066931 c:\users\titis\onedrive\documents\it\survive_the_island\calcul.h
 
-1746752401 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
+1746784275 source:c:\users\titis\onedrive\documents\it\survive_the_island\initialisation.c
 	"initialisation.h"
 	"donnee.h"
 	<stdlib.h>
@@ -120,12 +121,13 @@
 	"initialisation.h"
 	"tours.h"
 
-1746752403 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
+1746783888 source:c:\users\titis\onedrive\documents\it\survive_the_island\tours.c
 	"donnee.h"
 	"affichage.h"
 	"stdio.h"
 	"cartes.h"
 	"initialisation.h"
+	<unistd.h>
 
 1746752405 c:\users\titis\onedrive\documents\it\survive_the_island\cartes.h
 	"donnee.h"

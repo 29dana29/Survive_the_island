@@ -43,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="cartes.h" />
+		<Unit filename="deplacements.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="deplacements.h" />
 		<Unit filename="donnee.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -54,10 +58,6 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="plateau.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="plateau.h" />
 		<Unit filename="tours.c">
 			<Option compilerVar="CC" />
 		</Unit>

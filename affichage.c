@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <conio.h>
 #include "donnee.h"
 
@@ -7,16 +8,23 @@
 
 int couleurs_equipe[4] = {4, 1, 2, 6};
 extern casee Plateau[13][13];
-void debug_afficher_pions(casee Plateau[13][13]) {
-    for (int i = 0; i < 13; i++) {
-        for (int j = 0; j < 13; j++) {
-            for (int k = 0; k < 40; k++) {
-                if (Plateau[i][j].pions[k].equipe != -1) {
+void debug_afficher_pions(casee Plateau[13][13])
+{
+    for (int i = 0; i < 13; i++)
+    {
+        for (int j = 0; j < 13; j++)
+        {
+            for (int k = 0; k < 40; k++)
+            {
+                if (Plateau[i][j].pions[k].equipe != -1)
+                {
                     printf("Pion trouve a [%d][%d] dans Plateau : equipe = %d\n", i, j, Plateau[i][j].pions[k].equipe);
                 }
             }
-            for (int k = 0; k < 3; k++) {
-                if (Plateau[i][j].bateau.pions[k].equipe != -1) {
+            for (int k = 0; k < 3; k++)
+            {
+                if (Plateau[i][j].bateau.pions[k].equipe != -1)
+                {
                     printf("Pion trouve a [%d][%d] dans Bateau : equipe = %d\n", i, j, Plateau[i][j].bateau.pions[k].equipe);
                 }
             }
@@ -25,7 +33,8 @@ void debug_afficher_pions(casee Plateau[13][13]) {
 }
 
 
-void plein_ecran() {
+void plein_ecran()
+{
     // Sauvegarde l'etat de visibilite du curseur
     CONSOLE_CURSOR_INFO cursorInfo;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Recupere le handle de la console
@@ -49,7 +58,8 @@ void plein_ecran() {
 
 
 
-int get_input() {
+int get_input()
+{
     /* 72 Fleche Haut
        80 Fleche Bas
        75 Fleche Gauche
@@ -59,11 +69,15 @@ int get_input() {
 
     int key = getch(); // Recupere la premiere touche
 
-    if (key == 224){    // Touche speciale (ex : fleche)
-        key = getch();} // Recupere le code reel
+    if (key == 224)     // Touche speciale (ex : fleche)
+    {
+        key = getch();
+    } // Recupere le code reel
 
-    if (key == 27){     // Échap
-        debug_afficher_pions(Plateau);}// Quitte immediatement
+    if (key == 27)      // Échap
+    {
+        exit(0);
+    }// Quitte immediatement
 
     return key;        // Renvoie le code de la touche
 }
@@ -138,19 +152,35 @@ void contour(int x, int y, int w, int h)
     gotoxy(x+w, y+h);
     printf("┘");
 }
-void info_zone(int ligne_importance, const char *message) {
+void info_zone(int ligne_importance, const char *message)
+{
     int x = 65;
     int y = 2 + ligne_importance;
 
     // Couleur selon importance/ligne
-    switch (ligne_importance) {
-        case 0: set_color(7, 0); break;
-        case 1: set_color(2, 0); break;
-        case 2: set_color(3, 0); break;
-        case 3: set_color(6, 0); break;
-        case 4: set_color(4, 0); break;
-        case 5: set_color(4, 7); break;
-        default: set_color(7, 0); break;
+    switch (ligne_importance)
+    {
+    case 0:
+        set_color(7, 0);
+        break;
+    case 1:
+        set_color(2, 0);
+        break;
+    case 2:
+        set_color(3, 0);
+        break;
+    case 3:
+        set_color(6, 0);
+        break;
+    case 4:
+        set_color(4, 0);
+        break;
+    case 5:
+        set_color(4, 7);
+        break;
+    default:
+        set_color(7, 0);
+        break;
     }
 
     // Max 60 chars
@@ -164,13 +194,15 @@ void info_zone(int ligne_importance, const char *message) {
     printf("%s", affichage);
 }
 
-void selection_menu(int x, int y, char *options[], int num_options, int *selected_index) {
+void selection_menu(int x, int y, char *options[], int num_options, int *selected_index)
+{
     int key = 0;
     *selected_index = 0;
 
     // Affichage initial du menu
     set_color(15, 0);
-    for (int i = 0; i < num_options; i++) {
+    for (int i = 0; i < num_options; i++)
+    {
         gotoxy(0 + x, i +y+1); // Deplace le curseur sur chaque ligne du menu
         if (i == *selected_index)
             printf("-> %s", options[i]);  // Affiche l'option selectionnee avec la fleche
@@ -178,19 +210,26 @@ void selection_menu(int x, int y, char *options[], int num_options, int *selecte
             printf("   %s", options[i]);
     }
 
-    while (1) {
+    while (1)
+    {
         key = get_input();  // Recupere la touche pressee par l'utilisateur
 
-        if (key == 72 && *selected_index > 0) {  // Fleche haut
+        if (key == 72 && *selected_index > 0)    // Fleche haut
+        {
             (*selected_index)--;  // Deplace la selection vers le haut
-        } else if (key == 80 && *selected_index < num_options - 1) {  // Fleche bas
+        }
+        else if (key == 80 && *selected_index < num_options - 1)      // Fleche bas
+        {
             (*selected_index)++;  // Deplace la selection vers le bas
-        } else if (key == 13) {  // Touche Entree
+        }
+        else if (key == 13)      // Touche Entree
+        {
             break;  // Quitte la boucle lorsque l'utilisateur appuie sur Entree
         }
 
         // Rafraîchit l'affichage en mettant a jour le menu sans effacer l'ecran
-        for (int i = 0; i < num_options; i++) {
+        for (int i = 0; i < num_options; i++)
+        {
             gotoxy(0 + x, i+y+1);  // Deplace le curseur a la position de la ligne
             if (i == *selected_index)
                 printf("-> %s", options[i]);  // Affiche l'option selectionnee avec la fleche
@@ -229,7 +268,8 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
         couleur_fond = 8; //Gris
     }
     rectangle(x, y, 5, 3, couleur_fond);
-    if (select==1) {
+    if (select==1)
+    {
         gotoxy(x+4, y+2);
         set_color(0, 15);
         printf("X");
@@ -237,8 +277,9 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     set_color(0, couleur_fond);
 
     gotoxy(x, y);
-    if (compter_pions_couleur(case1.pions, 0, 40)+compter_pions_couleur(case1.pions, 1, 40)+compter_pions_couleur(case1.pions, 2, 40)+compter_pions_couleur(case1.pions, 3, 40) != 0) {
-       printf("P");
+    if (compter_pions_couleur(case1.pions, 0, 40)+compter_pions_couleur(case1.pions, 1, 40)+compter_pions_couleur(case1.pions, 2, 40)+compter_pions_couleur(case1.pions, 3, 40) != 0)
+    {
+        printf("P");
     }
     // ROUGE:
     gotoxy(x+1, y);
@@ -329,7 +370,8 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
 }
 
 
-void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
+void selection_case(casee Plateau[13][13], int *x_s, int *y_s)
+{
     //Proto:
     // void afficher_casee(int x, int y, casee case1, int select)  select: 0/1
 
@@ -349,25 +391,35 @@ void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
     *x_s = 6; // 0->12
     *y_s = 6; // 0->12
     afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-    while (1) {
+    while (1)
+    {
         int key = get_input();
-        if (key==72&&*y_s>0) { // Fleche haut + on est pas tout en haut
+        if (key==72&&*y_s>0)   // Fleche haut + on est pas tout en haut
+        {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
             *y_s-=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-        } else if (key== 80 && *y_s<12) { //Fleche bas + on est pas tout en bas
+        }
+        else if (key== 80 && *y_s<12)     //Fleche bas + on est pas tout en bas
+        {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
             *y_s+=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-        } else if (key==75 && *x_s>0) { // Fleche gauche + on est pas tout a droite
+        }
+        else if (key==75 && *x_s>0)     // Fleche gauche + on est pas tout a droite
+        {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
             *x_s-=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-        } else if (key==77 && *x_s<12) { // Fleche droite + on est pas tout a droite
+        }
+        else if (key==77 && *x_s<12)     // Fleche droite + on est pas tout a droite
+        {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
             *x_s+=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-        } else if (key==13) { // Entree
+        }
+        else if (key==13)     // Entree
+        {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0); //Enleve le tick de selection de la case selectinnee
             break; //Quitte la boucle, on garde donc la derniere case selectionnee
 

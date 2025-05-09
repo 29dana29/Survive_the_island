@@ -11,7 +11,7 @@ extern int jeu;
 // Fonctions de jeu pour chaque carte
 void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 {
-        gotoxy(75, 22);
+    gotoxy(75, 22);
     printf("Placer requin");
     Plateau[x][y].creatures[0].type = 1;
     action_requin(Plateau, x, y);
@@ -21,7 +21,7 @@ void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 void carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
 {
     //pas besoin de check pour les emplacement  vide comme c'etait un tuile terre ferme
-        gotoxy(75, 22);
+    gotoxy(75, 22);
     printf("Placer baleine");
     Plateau[x][y].creatures[0].type = 2;
     action_baleine(Plateau, x, y);
@@ -129,16 +129,17 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
         if (Plateau[x_d][y_d].creatures[i].type == -1)
         {
             Plateau[x_d][y_d].creatures[i] = *c;
-            switch(Plateau[x_d][y_d].creatures[i].type) { // Pour gerer l'action
-        case 0: // serpent
-            action_serpent(Plateau, x_d, y_d);
-            break;
-        case 1: // requin
-            action_requin(Plateau, x_d, y_d);
-            break;
-        case 2: // Balein
-            action_baleine(Plateau, x_d, y_d);
-            break;
+            switch(Plateau[x_d][y_d].creatures[i].type)   // Pour gerer l'action
+            {
+            case 0: // serpent
+                action_serpent(Plateau, x_d, y_d);
+                break;
+            case 1: // requin
+                action_requin(Plateau, x_d, y_d);
+                break;
+            case 2: // Balein
+                action_baleine(Plateau, x_d, y_d);
+                break;
             }
             (*c).type = -1; // Suppression de la creature de sa case d'origine
             afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
@@ -153,7 +154,7 @@ void carte_de_creature(casee Plateau[13][13], joueur *j)
     rectangle(65, 1, 60, 39, 0);
     gotoxy(75, 22);
     printf("Lance le de creature...");
-de_creature(Plateau);
+    de_creature(Plateau);
 }
 
 void carte_repulsif(casee Plateau[13][13], joueur *j)
@@ -163,6 +164,19 @@ void carte_repulsif(casee Plateau[13][13], joueur *j)
 
 void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y)
 {
+    char *type_cartes[10] =
+    {
+        "Placer Requin",
+        "Placer Baleine",
+        "Placer Bateau",
+        "Tourbillon",
+        "Eruption",
+        "Dauphin",
+        "Bouger Bateau",
+        "Plongeon",
+        "De creature",
+        "Repulsif"
+    };
     int id = case1.tuile.carte;
     if (id < 0 || id > 9) return;
     if (id <= 4)
@@ -188,6 +202,8 @@ void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y)
     }
     else
     {
+        gotoxy(75, 22);
+        printf("Carte obtenue: %s", type_cartes[id]);
         int i = 0;
         while ((*j).cartes[i] != -1) i++;
         (*j).cartes[i] = id;
@@ -243,7 +259,8 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
 
 void choisir_carte(joueur j, int *i_carte)
 {
-    char *type_cartes[11] = {
+    char *type_cartes[11] =
+    {
         "Passer",
         "Placer Requin",
         "Placer Baleine",
@@ -287,7 +304,7 @@ void choisir_carte(joueur j, int *i_carte)
 
     gotoxy(75, 2);
     set_color(8, 4);
-    printf("Selectionne la carte que tu veux jouer (ou Passer).\n");
+    printf("Selectionne la carte que tu veux jouer.\n");
 
     selection_menu(75, 4, options, n_cartes + 1, &i_select);
 

@@ -3,6 +3,9 @@
 #include "stdio.h"
 #include "cartes.h"
 #include "initialisation.h"
+#include <unistd.h>
+
+
 
 extern bateau bateau_null;
 extern pion pion_null;
@@ -521,6 +524,8 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13])
     obtenir_carte(Plateau, copie1, joueur, x_s, y_s);
     montee_eaux = deter_montee_eaux(Plateau);
     afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
+    usleep(500000);  // Attend 0.5 sec
+
 }
 
 void tour(joueur *joueur, casee Plateau[13][13])
