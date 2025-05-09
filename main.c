@@ -44,6 +44,8 @@ int main()
 
         }
     }
+        rectangle(0, 0, 120, 40, 3);
+
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
