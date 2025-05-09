@@ -58,6 +58,17 @@ int compter_pions_couleur(pion pions[], int equipe, int n)   // equipe=4: TOUTES
     return count;
 }
 
+int total_pion_couleur(casee Plateau[13][13], int equipe) {
+int somme = 0;
+for (int i = 0; i<13; i++) {
+    for (int j =0; j<13; j++) {
+        somme += compter_pions_couleur(Plateau[i][j].pions, equipe, 40);
+        somme += compter_pions_couleur(Plateau[i][j].bateau.pions, equipe, 3);
+    }
+}
+return somme;
+}
+
 int compter_cartes(joueur j)
 {
     int count = 0;

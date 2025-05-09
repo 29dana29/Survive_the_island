@@ -41,7 +41,10 @@ int deter_montee_eaux(casee Plateau[13][13]);
 int compter_creatures(casee case1, int type);
 int compter_creatures_plateau(casee Plateau[13][13], int type);
 
+
 int compter_cartes(joueur j);
 int determiner_leader(bateau bateau);
 int compter_pions_couleur(pion pions[], int couleur, int n);
+int total_pion_couleur(casee Plateau[13][13], int equipe);
+
 #endif // DONNEE_H_INCLUDED

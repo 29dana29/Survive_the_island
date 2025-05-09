@@ -142,8 +142,8 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
     Retourne un pointeur vers la créature sélectionnée, ou NULL si aucune n’est disponible.
     */
 
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(69, 1);
+    //rectangle(65, 1, 60, 39, 0);
+    gotoxy(69, 5);
     printf("Sélectionne la case contenant la créature à déplacer.");
 
     int x_s, y_s;
@@ -406,20 +406,20 @@ int action_baleine(casee Plateau[13][13], int x, int y)
 void de_creature(casee Plateau[13][13])
 {
     char * creatures[3] = {"Serpent", "Requin", "Baleine"};
-    int type = 2;//rand()%3;
+    int type = rand()%3;
     // Le nombre de mouvement de chaque créature c 1+ l'id de la créature
     int valide;
     rectangle(65, 1, 60, 39, 0);
-    gotoxy(70, 0);
+    gotoxy(70, 1);
     set_color(4, 2);
-    printf("De creature: %s", creatures[type]);
+    printf("De creature: %s   ", creatures[type]);
 
     if (compter_creatures_plateau(Plateau, type) <= 0)
     {
         gotoxy(19, 6);
         set_color(4, 3);
 
-        printf("%d Bah nan en fait, y'en a aucune sur le plato", compter_creatures_plateau(Plateau, type));
+        //printf("%d Bah nan en fait, y'en a aucune sur le plato", compter_creatures_plateau(Plateau, type));
     }
     else
     {
@@ -497,6 +497,7 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13]) {
         if ((Plateau[x_s][y_s].terre_ferme==1)&&(Plateau[x_s][y_s].tuile.type==montee_eaux)) {
             valide = 1;
         } else {
+            gotoxy(70, 15);
             printf("Pas valide.");
         }
     }
@@ -505,6 +506,7 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13]) {
     Plateau[x_s][y_s].terre_ferme=0;
     obtenir_carte(Plateau, copie1, joueur, x_s, y_s);
     montee_eaux = deter_montee_eaux(Plateau);
+    afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
 }
 
 void tour(joueur *joueur, casee Plateau[13][13])
@@ -512,7 +514,7 @@ void tour(joueur *joueur, casee Plateau[13][13])
     rectangle(65, 1, 60, 39, 0);
     gotoxy(66, 0);
     set_color(0, 15);
-    printf("TOUR DU JOUEUR %d", joueur->equipe);
+    printf("TOUR DU JOUEUR %d", (*joueur).equipe);
 
     // ##############"" CARTES
 
@@ -529,7 +531,7 @@ void tour(joueur *joueur, casee Plateau[13][13])
     char *options[] = {"Deplacer un pion", "Deplacer un bateau"};
     int select_indice;
 
-    while (p_mouvement > 0)
+    while (p_mouvement > 0 && total_pion_couleur(Plateau, (*joueur).equipe)>0)
     {
         rectangle(65, 1, 60, 39, 0);
         gotoxy(70, 2);
@@ -544,5 +546,8 @@ void tour(joueur *joueur, casee Plateau[13][13])
 
     // ############# ENLEVER TUILE
     enelever_tuile(joueur, Plateau);
+
+    // ####### De creature
+    de_creature(Plateau);
 
 }

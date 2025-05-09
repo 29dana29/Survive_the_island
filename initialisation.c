@@ -178,7 +178,7 @@ void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
             pion_actuel.numero=val_pion;
             gotoxy(13*5, 2);
             set_color(0, 15);
-            printf("JOUEUR %d: Selectionne ou tu veux placer ton pion %s de valeur %d", j, noms_pions[i], val_pion);
+            printf("JOUEUR %d: Place le pion %s de valeur %d", j, noms_pions[i], val_pion);
             int x_pion, y_pion;
 
             do {
@@ -203,6 +203,9 @@ void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
             int x_bateau, y_bateau;
             gotoxy(13 * 5, 2);
             set_color(15, 0);
+            printf("                                            ");
+            gotoxy(13 * 5, 2);
+
             printf("JOUEUR %d: Selectionne ou placer un bateau", j);
 
             do {

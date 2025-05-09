@@ -3,7 +3,26 @@
 #include <conio.h>
 #include "donnee.h"
 
+
+
 int couleurs_equipe[4] = {4, 1, 2, 6};
+extern casee Plateau[13][13];
+void debug_afficher_pions(casee Plateau[13][13]) {
+    for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 13; j++) {
+            for (int k = 0; k < 40; k++) {
+                if (Plateau[i][j].pions[k].equipe != -1) {
+                    printf("Pion trouvé à [%d][%d] dans Plateau : equipe = %d\n", i, j, Plateau[i][j].pions[k].equipe);
+                }
+            }
+            for (int k = 0; k < 3; k++) {
+                if (Plateau[i][j].bateau.pions[k].equipe != -1) {
+                    printf("Pion trouvé à [%d][%d] dans Bateau : equipe = %d\n", i, j, Plateau[i][j].bateau.pions[k].equipe);
+                }
+            }
+        }
+    }
+}
 
 
 void plein_ecran() {
@@ -40,11 +59,11 @@ int get_input() {
 
     int key = getch(); // Récupère la première touche
 
-    if (key == 224)    // Touche spéciale (ex : flèche)
-        key = getch(); // Récupère le code réel
+    if (key == 224){    // Touche spéciale (ex : flèche)
+        key = getch();} // Récupère le code réel
 
-    if (key == 27)     // Échap
-        ExitProcess(0); // Quitte immédiatement
+    if (key == 27){     // Échap
+        debug_afficher_pions(Plateau);}// Quitte immédiatement
 
     return key;        // Renvoie le code de la touche
 }
@@ -119,7 +138,31 @@ void contour(int x, int y, int w, int h)
     gotoxy(x+w, y+h);
     printf("┘");
 }
+void info_zone(int ligne_importance, const char *message) {
+    int x = 65;
+    int y = 2 + ligne_importance;
 
+    // Couleur selon importance/ligne
+    switch (ligne_importance) {
+        case 0: set_color(7, 0); break;
+        case 1: set_color(2, 0); break;
+        case 2: set_color(3, 0); break;
+        case 3: set_color(6, 0); break;
+        case 4: set_color(4, 0); break;
+        case 5: set_color(4, 7); break;
+        default: set_color(7, 0); break;
+    }
+
+    // Max 60 chars
+    char affichage[61]; // 60 + '\0'
+    strncpy(affichage, message, 60);
+    affichage[60] = '\0';
+
+    gotoxy(x, y);
+    printf("                                                             "); // Efface ligne
+    gotoxy(x, y);
+    printf("%s", affichage);
+}
 
 void selection_menu(int x, int y, char *options[], int num_options, int *selected_index) {
     int key = 0;
@@ -191,12 +234,8 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
         set_color(0, 15);
         printf("X");
     }
-    gotoxy(x+4, y+1);
     set_color(0, couleur_fond);
-    if (case1.tuile.carte>=0) {
-            printf("%d", case1.tuile.carte);
 
-    }
     gotoxy(x, y);
     if (compter_pions_couleur(case1.pions, 0, 40)+compter_pions_couleur(case1.pions, 1, 40)+compter_pions_couleur(case1.pions, 2, 40)+compter_pions_couleur(case1.pions, 3, 40) != 0) {
        printf("P");
@@ -249,13 +288,13 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     // #################BATEAU ######################
     if (case1.bateau.equipe_leader!=-2) // CODE POUR BATEAU NON PRESENT, BATEAU_NULL
     {
-        rectangle(x, y+2, 3, 1, 13);
+        rectangle(x, y+2, 3, 1, 6);
         for (int i =0; i<=2; i++)
         {
             if (case1.bateau.pions[i].equipe!=-1)
             {
                 gotoxy(x+i, y+2);
-                set_color(couleurs_equipe[case1.bateau.pions[i].equipe], 13);
+                set_color(couleurs_equipe[case1.bateau.pions[i].equipe], 6);
                 printf("P");
             }
         }
