@@ -9,7 +9,7 @@ extern pion pion_null;
 extern creature creature_null;
 extern tuile tuile_null;
 extern int montee_eaux;
-
+extern int couleurs_equipe[4];
 pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,int *y_i)
 {
     int x_s, y_s;
@@ -31,7 +31,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
         {
             rectangle(65, 1, 60, 39, 0);
             gotoxy(75, 15);
-            printf("Nan y'a pas de pion a toi là.");
+            printf("Nan y'a pas de pion a toi la.");
         }
     }
     *x_i = x_s;
@@ -137,14 +137,14 @@ pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *
 creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int *x_i, int *y_i)
 {
     /*
-    -1 : Toute créature confondue
-    Permet de sélectionner une créature sur le plateau, avec option de restriction sur le type.
-    Retourne un pointeur vers la créature sélectionnée, ou NULL si aucune n’est disponible.
+    -1 : Toute creature confondue
+    Permet de selectionner une creature sur le plateau, avec option de restriction sur le type.
+    Retourne un pointeur vers la creature selectionnee, ou NULL si aucune n’est disponible.
     */
 
     //rectangle(65, 1, 60, 39, 0);
     gotoxy(69, 5);
-    printf("Sélectionne la case contenant la créature à déplacer.");
+    printf("Selectionne la case contenant la creature a deplacer.");
 
     int x_s, y_s;
     int valide = 0;
@@ -166,12 +166,12 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
         if (!valide)
         {
             gotoxy(69, 3);
-            printf("Aucune créature valide ici. Choisis une autre case.");
+            printf("Aucune creature valide ici. Choisis une autre case.");
         }
     }
 
     char *option_creatures[] = {"Serpent", "Requin", "Baleine"};
-    int creatures_et_i[3]; // Max 3 créatures par case
+    int creatures_et_i[3]; // Max 3 creatures par case
     int n_creatures = 0;
 
     for (int i = 0; i < 3; i++)
@@ -198,7 +198,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
     rectangle(65, 1, 60, 39, 0);
     gotoxy(75, 2);
     set_color(5, 4);
-    printf("Sélectionne la créature que tu veux bouger");
+    printf("Selectionne la creature que tu veux bouger");
 
     int i_select = 0;
     selection_menu(75, 4, options, n_creatures, &i_select);
@@ -208,7 +208,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
 }
 
 
-void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int nageur) // NAGEUR 1/0 si il doit être un nageur et se deplacer dans l'eau
+void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int nageur) // NAGEUR 1/0 si il doit etre un nageur et se deplacer dans l'eau
 {
     int x_s, y_s;
     int x_d, y_d;
@@ -245,13 +245,16 @@ void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int 
             printf("Selectionne une case adjacente");
         }
     }
-    if ((x_d==12||x_d==0)&&(y_d==12||y_d==0)) { // Si c'est un coin
+    if ((x_d==12||x_d==0)&&(y_d==12||y_d==0))   // Si c'est un coin
+    {
         (*joueur).points+=copie_pion_source.numero; // augmentation du score
         gotoxy(75, 22);
         set_color(0, 15);
-        printf("+1 pion sauvé !");
+        printf("+1 pion sauve !");
 
-    } else { // Si c'est pas un coin
+    }
+    else     // Si c'est pas un coin
+    {
         *pion_arrivee = copie_pion_source;
     }
     Plateau[x_s][y_s].bateau.equipe_leader = determiner_leader(Plateau[x_s][y_s].bateau);
@@ -309,7 +312,7 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
         {
             gotoxy(70, 6);
             set_color(12, 0);
-            printf("Case invalide (doit être mer+adjacente+vide)");
+            printf("Case invalide (doit etre mer+adjacente+vide)");
         }
     }
 
@@ -323,7 +326,7 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
 }
 
 
-int action_serpent(casee Plateau[13][13], int x, int y) // Verifiée
+int action_serpent(casee Plateau[13][13], int x, int y) // Verifiee
 {
     int proie = 0;
 
@@ -352,7 +355,7 @@ int action_serpent(casee Plateau[13][13], int x, int y) // Verifiée
 int action_requin(casee Plateau[13][13], int x, int y)
 {
     /*Retourne 1 si jamais il y a une proie, 0 s'il n'y en a pas
-    Il enlève:
+    Il enleve:
         -tous les pions dans la case de mer hors de bateaux
     */
     int proie = 0;
@@ -371,7 +374,7 @@ int action_requin(casee Plateau[13][13], int x, int y)
 int action_baleine(casee Plateau[13][13], int x, int y)
 {
     /*Retourne 1 si jamais il y a une proie, 0 s'il n'y en a pas
-    Elle enlève:
+    Elle enleve:
         -le bateau de la case, s'il n'est pas vide
         les anciens pion du navire deviennent des pions dans la case de mer
 
@@ -407,7 +410,7 @@ void de_creature(casee Plateau[13][13])
 {
     char * creatures[3] = {"Serpent", "Requin", "Baleine"};
     int type = rand()%3;
-    // Le nombre de mouvement de chaque créature c 1+ l'id de la créature
+    // Le nombre de mouvement de chaque creature c 1+ l'id de la creature
     int valide;
     rectangle(65, 1, 60, 39, 0);
     gotoxy(70, 1);
@@ -424,7 +427,7 @@ void de_creature(casee Plateau[13][13])
     else
     {
         int proie = 0;
-        int p_mouvement = 1+type;// Le nombre de mouvement de chaque créature c 1+ l'id de la créature
+        int p_mouvement = 1+type;// Le nombre de mouvement de chaque creature c 1+ l'id de la creature
         int x_s, y_s;
         creature *creature_source = selectionner_creature(Plateau, type, &x_s, &y_s);
 
@@ -478,25 +481,36 @@ void de_creature(casee Plateau[13][13])
             afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
             afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
 
-            // L'actuelle destination devient la source du prochain déplacement
+            // L'actuelle destination devient la source du prochain deplacement
             x_s = x_d;
             y_s = y_d;
             creature_source = &Plateau[x_d][y_d].creatures[indice_copie];
 
             p_mouvement--;
-        }}}
+        }
+    }
+}
 
-void enelever_tuile(joueur *joueur, casee Plateau[13][13]) {
+void enelever_tuile(joueur *joueur, casee Plateau[13][13])
+{
     int valide = 0;
-        gotoxy(75, 2);
-    printf("Choisi une tuile à enlever!");
-            int x_s, y_s;
 
-    while (valide==0) {
+
+    rectangle(65, 2, 45, 20, 0);
+    gotoxy(70, 2);
+    printf("Choisi une tuile a enlever!");
+
+    int x_s, y_s;
+
+    while (valide==0)
+    {
         selection_case(Plateau, &x_s, &y_s);
-        if ((Plateau[x_s][y_s].terre_ferme==1)&&(Plateau[x_s][y_s].tuile.type==montee_eaux)) {
+        if ((Plateau[x_s][y_s].terre_ferme==1)&&(Plateau[x_s][y_s].tuile.type==montee_eaux))
+        {
             valide = 1;
-        } else {
+        }
+        else
+        {
             gotoxy(70, 15);
             printf("Pas valide.");
         }
@@ -513,7 +527,7 @@ void tour(joueur *joueur, casee Plateau[13][13])
 {
     rectangle(65, 1, 60, 39, 0);
     gotoxy(66, 0);
-    set_color(0, 15);
+    set_color(couleurs_equipe[(*joueur).equipe], 15);
     printf("TOUR DU JOUEUR %d", (*joueur).equipe);
 
     // ##############"" CARTES

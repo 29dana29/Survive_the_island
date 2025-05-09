@@ -28,7 +28,7 @@ int main()
     initialiser_plateau(Plateau, case_null);
     extern tuile deck_tuile[40];
     tuile tuiles[40];
-    memcpy(tuiles, deck_tuile, sizeof(tuiles)); // Copie des 40 éléments de deck_tuile dans tuiles
+    memcpy(tuiles, deck_tuile, sizeof(tuiles)); // Copie des 40 elements de deck_tuile dans tuiles
     melanger_tuiles(tuiles);
     placer_tuiles(Plateau, tuiles, socle);
     placer_serpents(Plateau);
@@ -56,9 +56,6 @@ int main()
     while (jeu==1) {
         for(int i = 0; i<n_joueurs; i++) {
             if (total_pion_couleur(Plateau, i)>0) {
-            gotoxy(12, 0);
-            set_color(0, 15);
-            printf("%d ", total_pion_couleur(Plateau, i));
             tour(&joueurs[i], Plateau);
             } else {
             jeu=0;

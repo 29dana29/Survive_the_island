@@ -118,22 +118,22 @@ Plateau[6][6].creatures[0].type = 0;
 }
 
 void melanger_tuiles(tuile tuiles[40]) {
-    for (int i = 39; i > 0; i--) { // On boucle de la fin du tableau vers le début
-        int j = rand() % (i + 1); // Choisit un indice aléatoire entre 0 et i inclus
-        tuile tmp = tuiles[i];    // Stocke temporairement la tuile à l'indice i
-        tuiles[i] = tuiles[j];    // Remplace la tuile à l'indice i par celle à l'indice j
-        tuiles[j] = tmp;          // Place la tuile initialement à l'indice i à la position j
+    for (int i = 39; i > 0; i--) { // On boucle de la fin du tableau vers le debut
+        int j = rand() % (i + 1); // Choisit un indice aleatoire entre 0 et i inclus
+        tuile tmp = tuiles[i];    // Stocke temporairement la tuile a l'indice i
+        tuiles[i] = tuiles[j];    // Remplace la tuile a l'indice i par celle a l'indice j
+        tuiles[j] = tmp;          // Place la tuile initialement a l'indice i a la position j
     }
 }
 
 void placer_tuiles(casee Plateau[13][13], tuile tuiles[40], int socle[13][13]) {
-    int k = 0; // compteur de tuiles placées
+    int k = 0; // compteur de tuiles placees
     for (int i = 0; i < 13; i++) {  // Correction de la boucle
         for (int j = 0; j < 13; j++) {
             if (socle[i][j] == 1) {
                 Plateau[i][j].tuile = tuiles[k];  // On place la tuile
                 Plateau[i][j].terre_ferme = 1;
-                k++;  // Incrémenter le compteur de tuiles
+                k++;  // Incrementer le compteur de tuiles
             }
         }
     }
@@ -167,7 +167,7 @@ void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
 
     char * noms_pions[10]={"A","B","C","D","E","F","G","H","I","J"};
     for (int i = 0; i<2; i++) {
-        int val_pion = (i+2)/2; //Valeur Formule pas piquée des hannetons grace a division euclid, qui permet de veski toute une liste de pions
+        int val_pion = (i+2)/2; //Valeur Formule pas piquee des hannetons grace a division euclid, qui permet de veski toute une liste de pions
         for (int j = 0; j<n_joueurs; j++) {
 
             pion pion_actuel;
@@ -212,7 +212,7 @@ void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs) {
                 selection_case(Plateau, &x_bateau, &y_bateau);
             } while  ((Plateau[x_bateau][y_bateau].bateau.equipe_leader!=-2)|| // Si il y a deja un bateau
                        (Plateau[x_bateau][y_bateau].terre_ferme==1) // check que on est sur la terre ferme
-                        ||(Plateau[x_bateau][y_bateau].creatures[0].type!=-1) // check que il y a une créature la
+                        ||(Plateau[x_bateau][y_bateau].creatures[0].type!=-1) // check que il y a une creature la
                         ||!( // Check que aucune case asdjacente n'est de la terre ferme
                            (Plateau[x_bateau+1][y_bateau+1].terre_ferme==1)
                            ||(Plateau[x_bateau][y_bateau+1].terre_ferme==1)

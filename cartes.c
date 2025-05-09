@@ -39,7 +39,7 @@ void carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
 void carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
 {
     gotoxy(75, 22);
-    printf("Oh purée, tourbillon.");
+    printf("Oh puree, tourbillon.");
     for (int i = -1; i <= 1; i++)
     {
         for (int j = -1; j <= 1; j++)
@@ -93,7 +93,7 @@ void carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
 void carte_plongeon(casee Plateau[13][13], joueur *j)
 {
     /*
-    Déplacer n'importe quelle créature sur n'importe quelle case de mer.
+    Deplacer n'importe quelle creature sur n'importe quelle case de mer.
     */
     gotoxy(75, 22);
     printf("Plongeon ?");
@@ -101,13 +101,13 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
     creature *c = selectionner_creature(Plateau, -1, &x_s, &y_s);
     if (c == NULL) return;
 
-    // Sélection de la case de destination
+    // Selection de la case de destination
     int x_d, y_d;
     int valide = 0;
 
     rectangle(65, 1, 60, 39, 0);
     gotoxy(69, 1);
-    printf("Sélectionne la case de destination (case de mer).");
+    printf("Selectionne la case de destination (case de mer).");
 
     while (!valide)
     {
@@ -119,17 +119,17 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
         else
         {
             gotoxy(69, 3);
-            printf("Ce n'est pas une case de mer valide. Réessaie.");
+            printf("Ce n'est pas une case de mer valide. Reessaie.");
         }
     }
 
-    // Déplacement réel
+    // Deplacement reel
     for (int i = 0; i < 3; i++)
     {
         if (Plateau[x_d][y_d].creatures[i].type == -1)
         {
             Plateau[x_d][y_d].creatures[i] = *c;
-            switch(Plateau[x_d][y_d].creatures[i].type) { // Pour gérer l'action
+            switch(Plateau[x_d][y_d].creatures[i].type) { // Pour gerer l'action
         case 0: // serpent
             action_serpent(Plateau, x_d, y_d);
             break;
@@ -140,7 +140,7 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
             action_baleine(Plateau, x_d, y_d);
             break;
             }
-            (*c).type = -1; // Suppression de la créature de sa case d'origine
+            (*c).type = -1; // Suppression de la creature de sa case d'origine
             afficher_casee(x_d*5, y_d*3, Plateau[x_d][y_d], 0);
             afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
             break;
@@ -253,8 +253,8 @@ void choisir_carte(joueur j, int *i_carte)
         "Dauphin",
         "Bouger Bateau",
         "Plongeon",
-        "Dé créature",
-        "Répulsif"
+        "De creature",
+        "Repulsif"
     };
 
     int carte_et_i[40][2];

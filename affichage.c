@@ -12,12 +12,12 @@ void debug_afficher_pions(casee Plateau[13][13]) {
         for (int j = 0; j < 13; j++) {
             for (int k = 0; k < 40; k++) {
                 if (Plateau[i][j].pions[k].equipe != -1) {
-                    printf("Pion trouvé à [%d][%d] dans Plateau : equipe = %d\n", i, j, Plateau[i][j].pions[k].equipe);
+                    printf("Pion trouve a [%d][%d] dans Plateau : equipe = %d\n", i, j, Plateau[i][j].pions[k].equipe);
                 }
             }
             for (int k = 0; k < 3; k++) {
                 if (Plateau[i][j].bateau.pions[k].equipe != -1) {
-                    printf("Pion trouvé à [%d][%d] dans Bateau : equipe = %d\n", i, j, Plateau[i][j].bateau.pions[k].equipe);
+                    printf("Pion trouve a [%d][%d] dans Bateau : equipe = %d\n", i, j, Plateau[i][j].bateau.pions[k].equipe);
                 }
             }
         }
@@ -26,24 +26,24 @@ void debug_afficher_pions(casee Plateau[13][13]) {
 
 
 void plein_ecran() {
-    // Sauvegarde l'état de visibilité du curseur
+    // Sauvegarde l'etat de visibilite du curseur
     CONSOLE_CURSOR_INFO cursorInfo;
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Récupère le handle de la console
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // Recupere le handle de la console
     GetConsoleCursorInfo(hConsole, &cursorInfo); // Lit les infos du curseur
-    int cursorVisible = cursorInfo.bVisible; // Stocke la visibilité actuelle
+    int cursorVisible = cursorInfo.bVisible; // Stocke la visibilite actuelle
 
-    // Simule Alt + Entrée pour basculer en plein écran
+    // Simule Alt + Entree pour basculer en plein ecran
     keybd_event(VK_MENU, 0x38, 0, 0); // Appui Alt
-    keybd_event(VK_RETURN, 0x1c, 0, 0); // Appui Entrée
-    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Relâche Entrée
+    keybd_event(VK_RETURN, 0x1c, 0, 0); // Appui Entree
+    keybd_event(VK_RETURN, 0x1c, KEYEVENTF_KEYUP, 0); // Relâche Entree
     keybd_event(VK_MENU, 0x38, KEYEVENTF_KEYUP, 0); // Relâche Alt
 
-    // Pause pour laisser le mode plein écran s'activer
+    // Pause pour laisser le mode plein ecran s'activer
     Sleep(500); // Attente 500 ms
 
-    // Restaure la visibilité du curseur
+    // Restaure la visibilite du curseur
     GetConsoleCursorInfo(hConsole, &cursorInfo); // Relit les infos du curseur
-    cursorInfo.bVisible = cursorVisible; // Rétablit l'état initial
+    cursorInfo.bVisible = cursorVisible; // Retablit l'etat initial
     SetConsoleCursorInfo(hConsole, &cursorInfo); // Applique la modification
 }
 
@@ -54,23 +54,23 @@ int get_input() {
        80 Fleche Bas
        75 Fleche Gauche
        77 Fleche Droite
-       13 Entrée
+       13 Entree
        27 Échap */
 
-    int key = getch(); // Récupère la première touche
+    int key = getch(); // Recupere la premiere touche
 
-    if (key == 224){    // Touche spéciale (ex : flèche)
-        key = getch();} // Récupère le code réel
+    if (key == 224){    // Touche speciale (ex : fleche)
+        key = getch();} // Recupere le code reel
 
     if (key == 27){     // Échap
-        debug_afficher_pions(Plateau);}// Quitte immédiatement
+        debug_afficher_pions(Plateau);}// Quitte immediatement
 
     return key;        // Renvoie le code de la touche
 }
 
 
 
-// Fonction pour déplacer le curseur à la position spécifiée (x, y)
+// Fonction pour deplacer le curseur a la position specifiee (x, y)
 void gotoxy(int x, int y)
 {
     COORD coord;
@@ -82,7 +82,7 @@ void gotoxy(int x, int y)
 void set_color(WORD fg, WORD bg)
 {
     /*
-    0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
+    0 Noir 1 BleuFonce 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
     8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
     */
 
@@ -171,29 +171,29 @@ void selection_menu(int x, int y, char *options[], int num_options, int *selecte
     // Affichage initial du menu
     set_color(15, 0);
     for (int i = 0; i < num_options; i++) {
-        gotoxy(0 + x, i +y+1); // Déplace le curseur sur chaque ligne du menu
+        gotoxy(0 + x, i +y+1); // Deplace le curseur sur chaque ligne du menu
         if (i == *selected_index)
-            printf("-> %s", options[i]);  // Affiche l'option sélectionnée avec la flèche
+            printf("-> %s", options[i]);  // Affiche l'option selectionnee avec la fleche
         else
             printf("   %s", options[i]);
     }
 
     while (1) {
-        key = get_input();  // Récupère la touche pressée par l'utilisateur
+        key = get_input();  // Recupere la touche pressee par l'utilisateur
 
-        if (key == 72 && *selected_index > 0) {  // Flèche haut
-            (*selected_index)--;  // Déplace la sélection vers le haut
-        } else if (key == 80 && *selected_index < num_options - 1) {  // Flèche bas
-            (*selected_index)++;  // Déplace la sélection vers le bas
-        } else if (key == 13) {  // Touche Entrée
-            break;  // Quitte la boucle lorsque l'utilisateur appuie sur Entrée
+        if (key == 72 && *selected_index > 0) {  // Fleche haut
+            (*selected_index)--;  // Deplace la selection vers le haut
+        } else if (key == 80 && *selected_index < num_options - 1) {  // Fleche bas
+            (*selected_index)++;  // Deplace la selection vers le bas
+        } else if (key == 13) {  // Touche Entree
+            break;  // Quitte la boucle lorsque l'utilisateur appuie sur Entree
         }
 
-        // Rafraîchit l'affichage en mettant à jour le menu sans effacer l'écran
+        // Rafraîchit l'affichage en mettant a jour le menu sans effacer l'ecran
         for (int i = 0; i < num_options; i++) {
-            gotoxy(0 + x, i+y+1);  // Déplace le curseur à la position de la ligne
+            gotoxy(0 + x, i+y+1);  // Deplace le curseur a la position de la ligne
             if (i == *selected_index)
-                printf("-> %s", options[i]);  // Affiche l'option sélectionnée avec la flèche
+                printf("-> %s", options[i]);  // Affiche l'option selectionnee avec la fleche
             else
                 printf("   %s", options[i]);
         }
@@ -207,7 +207,7 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     P1234  1 pion rouge, 2 bleu,
     SBR##
     PPP#X <- select (X)
-    0 Noir 1 BleuFoncé 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
+    0 Noir 1 BleuFonce 2 Vert 3 Cyan 4 Rouge 5 Magenta 6 JauneF 7 GrisC
     8 GrisClair 9 BleuClair 10 VertF 11 CyanC 12 RougeC 13 MagentaC 14 JauneClair 15 Blanc
 
     */
@@ -288,13 +288,13 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     // #################BATEAU ######################
     if (case1.bateau.equipe_leader!=-2) // CODE POUR BATEAU NON PRESENT, BATEAU_NULL
     {
-        rectangle(x, y+2, 3, 1, 6);
+        rectangle(x, y+2, 3, 1, 7);
         for (int i =0; i<=2; i++)
         {
             if (case1.bateau.pions[i].equipe!=-1)
             {
                 gotoxy(x+i, y+2);
-                set_color(couleurs_equipe[case1.bateau.pions[i].equipe], 6);
+                set_color(couleurs_equipe[case1.bateau.pions[i].equipe], 7);
                 printf("P");
             }
         }
@@ -339,11 +339,11 @@ void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
     //BBB#0  <-- indicateur de selection ici, type X en noir sur blanc
 
     /*
-    72 pour flèche haut
-    80 pour flèche bas
-    75 pour flèche gauche
-    77 pour flèche droite
-    13 pour Entrée
+    72 pour fleche haut
+    80 pour fleche bas
+    75 pour fleche gauche
+    77 pour fleche droite
+    13 pour Entree
     */
 
     *x_s = 6; // 0->12
@@ -367,9 +367,9 @@ void selection_case(casee Plateau[13][13], int *x_s, int *y_s) {
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0);
             *x_s+=1;
             afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 1);
-        } else if (key==13) { // Entrée
-            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0); //Enleve le tick de sélection de la case sélectinnée
-            break; //Quitte la boucle, on garde donc la dernière case sélectionnée
+        } else if (key==13) { // Entree
+            afficher_casee(*x_s*5, *y_s*3, Plateau[*x_s][*y_s], 0); //Enleve le tick de selection de la case selectinnee
+            break; //Quitte la boucle, on garde donc la derniere case selectionnee
 
         }
     }

@@ -82,8 +82,8 @@ int compter_cartes(joueur j)
     return count;
 }
 
-int compter_creatures(casee case1, int type) { // type=3: Toute créature
-    // compte forcément dans une case donc forcément 3 emplacements
+int compter_creatures(casee case1, int type) { // type=3: Toute creature
+    // compte forcement dans une case donc forcement 3 emplacements
     int count = 0;
     for (int i =0; i<3; i++) {
         if (case1.creatures[i].type==type || (type==3 && case1.creatures[i].type!=-1)) {
@@ -92,7 +92,7 @@ int compter_creatures(casee case1, int type) { // type=3: Toute créature
     }
     return count;
 }
-int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: Toute créature
+int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: Toute creature
     int count =0;
     for (int i = 0; i<13; i++) {
         for (int j = 0; j <13; j++) {
@@ -106,7 +106,7 @@ int deter_montee_eaux(casee Plateau[13][13]) {
     int montee = 2; // set au max
     for (int i=0; i<13; i++) {
         for (int j = 0; j<13; j++) {
-            if (montee==2&&Plateau[i][j].tuile.type==1) { // Forêt
+            if (montee==2&&Plateau[i][j].tuile.type==1) { // Foret
                 montee = 1;
             } else if (Plateau[i][j].tuile.type==0) {
                 montee = 0;
