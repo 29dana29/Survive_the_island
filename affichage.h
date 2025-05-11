@@ -30,5 +30,6 @@ int get_input();
 void gotoxy(int x, int y);
 void selection_menu(int x, int y, char *options[], int num_options, int *selected_index);
 void selection_case(casee Plateau[13][13], int *x_s, int *y_s);
+void nouveau_message(const char * message, int couleur_texte);
 
 #endif // AFFICHAGE_H_INCLUDED

@@ -11,8 +11,7 @@ extern int jeu;
 // Fonctions de jeu pour chaque carte
 void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 {
-    gotoxy(75, 22);
-    printf("Placer requin");
+    nouveau_message("Placer requin", BLANC);
     Plateau[x][y].creatures[0].type = 1;
     action_requin(Plateau, x, y);
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
@@ -21,25 +20,23 @@ void carte_immediat_placer_requin(casee Plateau[13][13], int x, int y)
 void carte_immediat_placer_baleine(casee Plateau[13][13], int x, int y)
 {
     //pas besoin de check pour les emplacement  vide comme c'etait un tuile terre ferme
-    gotoxy(75, 22);
-    printf("Placer baleine");
+    nouveau_message("Placer baleine", BLANC);
     Plateau[x][y].creatures[0].type = 2;
     action_baleine(Plateau, x, y);
+
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
 void carte_immediat_placer_bateau(casee Plateau[13][13], int x, int y)
 {
-    gotoxy(75, 22);
-    printf("Placer bateau");
+    nouveau_message("Placer bateau", BLANC);
     Plateau[x][y].bateau.equipe_leader = -1;
     afficher_casee(x * 5, y * 3, Plateau[x][y], 0);
 }
 
 void carte_immediat_tourbillon(casee Plateau[13][13], int x, int y)
 {
-    gotoxy(75, 22);
-    printf("Oh puree, tourbillon.");
+    nouveau_message("Oh non, un tourbillon !", BLEU);
     for (int i = -1; i <= 1; i++)
     {
         for (int j = -1; j <= 1; j++)
@@ -61,14 +58,14 @@ void carte_immediat_eruption(casee Plateau[13][13], int x, int y)
 
     gotoxy(80, 1);
     set_color(0, 15);
-    printf("Oh non, la lave qui coule ! C'est fini.");
+    nouveau_message("OH NON, LA LAVA QUI COULE ! C'EST BIENTOT FINI...", ROUGE_CLAIR);
     jeu = 0;
 }
 
 void carte_dauphin(casee Plateau[13][13], joueur *j)
 {
     gotoxy(75, 22);
-    printf("Un dauphin a la rescousse !");
+    nouveau_message("Un dauphin a la rescousse !", CYAN);
     int mouvements = 3;
     while (mouvements > 0)
     {
@@ -84,10 +81,12 @@ void carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
     int p_mouvements = 3;
     while (p_mouvements > 0)
     {
-        gotoxy(80, 1);
-        printf("Mouvements: %d", p_mouvements);
+        char message[61];
+        sprintf(message, "Bords restants: %d", p_mouvements);
+        nouveau_message(message, BLEU);
         deplacer_bateau(j, Plateau, &p_mouvements);
     }
+
 }
 
 void carte_plongeon(casee Plateau[13][13], joueur *j)

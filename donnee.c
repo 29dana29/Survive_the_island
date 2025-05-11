@@ -58,15 +58,18 @@ int compter_pions_couleur(pion pions[], int equipe, int n)   // equipe=4: TOUTES
     return count;
 }
 
-int total_pion_couleur(casee Plateau[13][13], int equipe) {
-int somme = 0;
-for (int i = 0; i<13; i++) {
-    for (int j =0; j<13; j++) {
-        somme += compter_pions_couleur(Plateau[i][j].pions, equipe, 40);
-        somme += compter_pions_couleur(Plateau[i][j].bateau.pions, equipe, 3);
+int total_pion_couleur(casee Plateau[13][13], int equipe)
+{
+    int somme = 0;
+    for (int i = 0; i<13; i++)
+    {
+        for (int j =0; j<13; j++)
+        {
+            somme += compter_pions_couleur(Plateau[i][j].pions, equipe, 40);
+            somme += compter_pions_couleur(Plateau[i][j].bateau.pions, equipe, 3);
+        }
     }
-}
-return somme;
+    return somme;
 }
 
 int compter_cartes(joueur j)
@@ -82,33 +85,45 @@ int compter_cartes(joueur j)
     return count;
 }
 
-int compter_creatures(casee case1, int type) { // type=3: Toute creature
+int compter_creatures(casee case1, int type)   // type=3: Toute creature
+{
     // compte forcement dans une case donc forcement 3 emplacements
     int count = 0;
-    for (int i =0; i<3; i++) {
-        if (case1.creatures[i].type==type || (type==3 && case1.creatures[i].type!=-1)) {
+    for (int i =0; i<3; i++)
+    {
+        if (case1.creatures[i].type==type || (type==3 && case1.creatures[i].type!=-1))
+        {
             count ++;
         }
     }
     return count;
 }
-int compter_creatures_plateau(casee Plateau[13][13], int type) { // type ==3: Toute creature
+int compter_creatures_plateau(casee Plateau[13][13], int type)   // type ==3: Toute creature
+{
     int count =0;
-    for (int i = 0; i<13; i++) {
-        for (int j = 0; j <13; j++) {
+    for (int i = 0; i<13; i++)
+    {
+        for (int j = 0; j <13; j++)
+        {
             count += compter_creatures(Plateau[i][j], type);
         }
     }
     return count;
 }
 
-int deter_montee_eaux(casee Plateau[13][13]) {
+int deter_montee_eaux(casee Plateau[13][13])
+{
     int montee = 2; // set au max
-    for (int i=0; i<13; i++) {
-        for (int j = 0; j<13; j++) {
-            if (montee==2&&Plateau[i][j].tuile.type==1) { // Foret
+    for (int i=0; i<13; i++)
+    {
+        for (int j = 0; j<13; j++)
+        {
+            if (montee==2&&Plateau[i][j].tuile.type==1)   // Foret
+            {
                 montee = 1;
-            } else if (Plateau[i][j].tuile.type==0) {
+            }
+            else if (Plateau[i][j].tuile.type==0)
+            {
                 montee = 0;
             }
         }

@@ -20,7 +20,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 
     while (!valide)
     {
-        nouveau_message("Selectionne la case d'ou tu veux bouger.", BLANC);
+        nouveau_message("Selectionne la case d'ou tu veux bouger un pion", BLANC);
 
         selection_case(Plateau, &x_s, &y_s);
 
@@ -32,7 +32,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
         {
             rectangle(65, 1, 60, 39, 0);
             gotoxy(75, 15);
-            nouveau_message("Nan y'a pas de pion a toi la.", ROUGE);
+            nouveau_message("Non, pas de pion a toi ici.", ROUGE);
         }
     }
     *x_i = x_s;
@@ -67,7 +67,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 
     int select_indice;
     nouveau_message("Selectionne un pion", BLEU);
-    selection_menu(75, 16, options_pions, nb, &select_indice);
+    selection_menu(70, 7, options_pions, nb, &select_indice);
 
     for (int i = 0; i < 40; i++)
     {
@@ -196,7 +196,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
     *y_i = y_s;
     return &Plateau[x_s][y_s].creatures[creatures_et_i[i_select]];
 }
-
+/*rectangle*/
 
 void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int nageur) // NAGEUR 1/0 si il doit etre un nageur et se deplacer dans l'eau
 {
@@ -236,9 +236,7 @@ void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int 
     if ((x_d==12||x_d==0)&&(y_d==12||y_d==0))   // Si c'est un coin
     {
         (*joueur).points+=copie_pion_source.numero; // augmentation du score
-        gotoxy(75, 22);
-        set_color(0, 15);
-        printf("+1 pion sauve !");
+        nouveau_message("+1 pion sauve !", couleurs_equipe[(*joueur).equipe]);
 
     }
     else     // Si c'est pas un coin
@@ -260,22 +258,19 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
     int x_s, y_s;
     int x_d, y_d;
     int valide = 0;
-
-    rectangle(65, 2, 60, 39, 0);
-    gotoxy(70, 2);
-    set_color(15, 0);
-    printf("Selectionne la case du bateau a bouger");
+    /*rectangle*/
+    nouveau_message("-Selectionne la case du bateau a bouger", BLANC);
 
     while (!valide)
     {
         selection_case(Plateau, &x_s, &y_s);
-        if (Plateau[x_s][y_s].bateau.equipe_leader == joueur->equipe || Plateau[x_s][y_s].bateau.equipe_leader == -1)
+        if (Plateau[x_s][y_s].bateau.equipe_leader == (*joueur).equipe || Plateau[x_s][y_s].bateau.equipe_leader == -1)
             valide = 1;
         else
         {
             gotoxy(70, 3);
             set_color(15, 0);
-            printf("Dont tu es le capitaine ou vide");
+            nouveau_message("Dont tu es le capitaine ou vide", ROUGE);
         }
     }
 
@@ -283,10 +278,7 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
     Plateau[x_s][y_s].bateau = bateau_null;
     afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
 
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(70, 2);
-    set_color(15, 0);
-    printf("Selectionne la case ou bouger le bateau");
+    nouveau_message("Selectionne la case ou bouger le bateau", BLANC);
 
     valide = 0;
     while (!valide)
@@ -300,7 +292,7 @@ void deplacer_bateau(joueur *joueur, casee Plateau[13][13], int *p_mouvement)
         {
             gotoxy(70, 6);
             set_color(12, 0);
-            printf("Case invalide (doit etre mer+adjacente+vide)");
+            nouveau_message("Case invalide (doit etre mer+adjacente+vide)", ROUGE);
         }
     }
 
@@ -400,10 +392,9 @@ void de_creature(casee Plateau[13][13])
     int type = rand()%3;
     // Le nombre de mouvement de chaque creature c 1+ l'id de la creature
     int valide;
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(70, 1);
-    set_color(4, 2);
-    printf("De creature: %s   ", creatures[type]);
+    char message[61];
+    sprintf("De creature: %s   ", creatures[type]);
+    nouveau_message(message, VERT);
 
     if (compter_creatures_plateau(Plateau, type) <= 0)
     {
@@ -425,9 +416,9 @@ void de_creature(casee Plateau[13][13])
             //Selection de la destination
             valide = 0;
             int x_d, y_d;
-            gotoxy(70, 6);
-            set_color(4, 3);
-            printf("Selectionne une case adjacente comme destination %d", p_mouvement);
+            char message[61];
+            sprintf(message, "Selectionne une case adjacente comme destination %d", p_mouvement);
+            nouveau_message(message, BLANC);
             while (valide==0)
             {
                 selection_case(Plateau, &x_d, &y_d);
@@ -437,9 +428,7 @@ void de_creature(casee Plateau[13][13])
                 }
                 else
                 {
-                    gotoxy(70, 7);
-                    set_color(4, 3);
-                    printf("Pas la place / pas mer / trop loin");
+                    nouveau_message("Pas la place / pas mer / trop loin", ROUGE);
                 }
             }
             int indice_copie=0;
@@ -483,10 +472,7 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13])
 {
     int valide = 0;
 
-
-    rectangle(65, 2, 45, 20, 0);
-    gotoxy(70, 2);
-    printf("Choisi une tuile a enlever!");
+    nouveau_message("Choisi une tuile a enlever!", BLANC);
 
     int x_s, y_s;
 
@@ -508,7 +494,6 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13])
     obtenir_carte(Plateau, copie1, joueur, x_s, y_s);
     montee_eaux = deter_montee_eaux(Plateau);
     afficher_casee(x_s*5, y_s*3, Plateau[x_s][y_s], 0);
-    usleep(500000);  // Attend 0.5 sec
 
 }
 

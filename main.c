@@ -33,11 +33,6 @@ int main()
     placer_tuiles(Plateau, tuiles, socle);
     placer_serpents(Plateau);
 
-    /*Plateau[4][4].pions[0].equipe=0;
-    Plateau[4][4].pions[0].numero=1;
-    strcpy(Plateau[4][4].pions[0].nom, "A");
-    Plateau[3][4].bateau.equipe_leader=-1;*/
-
     for (int i = 0; i<13; i++)
     {
         for (int j = 0; j<13; j++)
@@ -50,15 +45,11 @@ int main()
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
-        char message[61];
-
-    /*for (int i =0; i<15; i++) {
-        sprintf(message, "Goat %d", i);
-    nouveau_message(message, ROUGE); // Texte rouge sur fond noir
-    }*/
-
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);
+
+    carte_immediat_placer_baleine(Plateau, 2, 4);
+
     while (jeu==1)
     {
         for(int i = 0; i<n_joueurs; i++)

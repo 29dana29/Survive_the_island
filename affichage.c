@@ -14,7 +14,8 @@ int couleurs_equipe[4] = {4, 1, 2, 6};
 extern casee Plateau[13][13];
 
 // Définition d'une structure pour représenter un message
-typedef struct {
+typedef struct
+{
     char text[MESSAGE_LENGTH + 1];    // Texte du message (60 caractères max + caractère de fin '\0')
     int couleur_texte;                // Couleur du texte (avant-plan)
 } Message;
@@ -173,12 +174,14 @@ Message messageQueue[MAX_MESSAGES];   // File d'attente pour stocker les message
 int messageCount = 0;                 // Nombre actuel de messages dans la file d'attente
 
 // Fonction pour afficher tous les messages dans la file d'attente
-void afficher_messages() {
+void afficher_messages()
+{
     // Effacer toute la zone d'affichage des messages
     rectangle(MESSAGE_X, MESSAGE_Y, MESSAGE_LENGTH, MAX_MESSAGES, NOIR);
     contour(MESSAGE_X-1, MESSAGE_Y-1, MESSAGE_LENGTH+2, MAX_MESSAGES+2);
     // Afficher chaque message dans la file d'attente
-    for (int i = 0; i < messageCount; i++) {
+    for (int i = 0; i < messageCount; i++)
+    {
         gotoxy(MESSAGE_X, MESSAGE_Y + i); // Positionner le curseur pour chaque ligne de message
         set_color(messageQueue[i].couleur_texte, NOIR); // Définir la couleur du texte avec un fond noir
         printf("%s", messageQueue[i].text); // Afficher le texte du message
@@ -189,10 +192,13 @@ void afficher_messages() {
 }
 
 // Fonction pour ajouter un nouveau message dans la file d'attente
-void nouveau_message(const char *message, int couleur_texte) {
+void nouveau_message(const char *message, int couleur_texte)
+{
     // Si la file d'attente est pleine, supprimer le message le plus ancien
-    if (messageCount == MAX_MESSAGES) {
-        for (int i = 1; i < MAX_MESSAGES; i++) {
+    if (messageCount == MAX_MESSAGES)
+    {
+        for (int i = 1; i < MAX_MESSAGES; i++)
+        {
             messageQueue[i - 1] = messageQueue[i];
         }
         messageCount--;
@@ -241,6 +247,9 @@ void selection_menu(int x, int y, char *options[], int num_options, int *selecte
         }
         else if (key == 13)      // Touche Entree
         {
+            set_color(VERT, NOIR);
+            gotoxy(0 + x, *selected_index+y+1);
+            printf("   %s", options[*selected_index]);
             break;  // Quitte la boucle lorsque l'utilisateur appuie sur Entree
         }
 
@@ -268,7 +277,11 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
 
     */
     int couleur_fond;
-    if (case1.terre_ferme==0)   // mer
+    if ((x==5*12||x==0)&&(y==12*3||y==0))   // Si on est dans un coin, couleur légèrement différente
+    {
+        couleur_fond = 14; //JAUne sable
+    }
+    else if (case1.terre_ferme==0)     // mer
     {
         couleur_fond = 11;
     }
@@ -284,6 +297,8 @@ void afficher_casee(int x, int y, casee case1, int select) // select 0/1
     {
         couleur_fond = 8; //Gris
     }
+
+
     rectangle(x, y, 5, 3, couleur_fond);
     if (select==1)
     {

@@ -11,7 +11,7 @@ creature creature_null;
 tuile tuile_null;
 casee case_null;
 joueur joueur_null;
-
+extern int couleurs_equipe[4];
 int socle[13][13] =   // LISTE DE COLONNES
 {
     //
@@ -121,10 +121,10 @@ void initialiser_plateau(casee Plateau[13][13], casee casenulle)
 }
 void placer_serpents(casee Plateau[13][13])
 {
-    Plateau[0][0].creatures[0].type = 0; // Hard code, placement des serpents
-    Plateau[0][12].creatures[0].type = 0;
-    Plateau[12][0].creatures[0].type = 0;
-    Plateau[12][12].creatures[0].type = 0;
+    Plateau[1][1].creatures[0].type = 0; // Hard code, placement des serpents
+    Plateau[1][11].creatures[0].type = 0;
+    Plateau[11][1].creatures[0].type = 0;
+    Plateau[11][11].creatures[0].type = 0;
     Plateau[6][6].creatures[0].type = 0;
 
 }
@@ -168,6 +168,7 @@ void initialiser_joueurs(joueur joueurs[4], int *n_joueurs)
     char *options[] = {"2 joueurs", "3 joueurs", "4 joueurs"};
 
     gotoxy(75, 3);
+    set_color(15, 0);
     printf("Combien de joueurs ?");
     selection_menu(75, 5, options, 3, &selected);
 
@@ -201,16 +202,17 @@ void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs)
 
             pion_actuel.numero=val_pion;
             gotoxy(13*5, 2);
-            set_color(0, 15);
+            set_color(couleurs_equipe[j], 0);
             printf("JOUEUR %d: Place le pion %s de valeur %d", j, noms_pions[i], val_pion);
             int x_pion, y_pion;
 
             do
             {
                 selection_case(Plateau, &x_pion, &y_pion);
-                //gotoxy(13*5, 3);
-                //set_color(15, 0);
-                //printf("%d  %d  ", Plateau[x_pion][y_pion].terre_ferme, Plateau[x_pion][y_pion].pions[0].equipe);
+                if (Plateau[x_pion][y_pion].terre_ferme!=1 || Plateau[x_pion][y_pion].pions[0].equipe!=-1)
+                {
+                    nouveau_message("Case invalide", ROUGE);
+                }
             }
             while (Plateau[x_pion][y_pion].terre_ferme!=1 || Plateau[x_pion][y_pion].pions[0].equipe!=-1);
             Plateau[x_pion][y_pion].pions[0] = pion_actuel;
@@ -235,13 +237,11 @@ void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs)
             printf("                                            ");
             gotoxy(13 * 5, 2);
 
-            printf("JOUEUR %d: Selectionne ou placer un bateau", j);
+            set_color(couleurs_equipe[j], 7);
 
-            do
-            {
-                selection_case(Plateau, &x_bateau, &y_bateau);
-            }
-            while  ((Plateau[x_bateau][y_bateau].bateau.equipe_leader!=-2)||   // Si il y a deja un bateau
+            printf("JOUEUR %d: Selectionne ou placer un bateau", j);
+            selection_case(Plateau, &x_bateau, &y_bateau);
+            while ((Plateau[x_bateau][y_bateau].bateau.equipe_leader!=-2)||   // Si il y a deja un bateau
                     (Plateau[x_bateau][y_bateau].terre_ferme==1) // check que on est sur la terre ferme
                     ||(Plateau[x_bateau][y_bateau].creatures[0].type!=-1) // check que il y a une creature la
                     ||!( // Check que aucune case asdjacente n'est de la terre ferme
@@ -254,7 +254,12 @@ void placer_bateaux(casee Plateau[13][13], joueur joueurs[], int n_joueurs)
                         ||(Plateau[x_bateau+1][y_bateau-1].terre_ferme==1)
                         ||(Plateau[x_bateau+1][y_bateau].terre_ferme==1)
                     )
-                   );
+                  )
+            {
+                nouveau_message("Case invalide!", ROUGE);
+                selection_case(Plateau, &x_bateau, &y_bateau);
+
+            }
 
             Plateau[x_bateau][y_bateau].bateau = bateau_actuel;
             afficher_casee(x_bateau*5, y_bateau*3, Plateau[x_bateau][y_bateau], 0);
