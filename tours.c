@@ -393,7 +393,7 @@ void de_creature(casee Plateau[13][13])
     // Le nombre de mouvement de chaque creature c 1+ l'id de la creature
     int valide;
     char message[61];
-    sprintf("De creature: %s   ", creatures[type]);
+    sprintf(message, "De creature: %s   ", creatures[type]);
     nouveau_message(message, VERT);
 
     if (compter_creatures_plateau(Plateau, type) <= 0)
@@ -401,7 +401,6 @@ void de_creature(casee Plateau[13][13])
         gotoxy(19, 6);
         set_color(4, 3);
 
-        //printf("%d Bah nan en fait, y'en a aucune sur le plato", compter_creatures_plateau(Plateau, type));
     }
     else
     {
@@ -540,8 +539,8 @@ void tour(joueur *joueur, casee Plateau[13][13])
 
     // ############# ENLEVER TUILE
     enelever_tuile(joueur, Plateau);
-
     // ####### De creature
     de_creature(Plateau);
+
 
 }

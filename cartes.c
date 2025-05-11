@@ -58,7 +58,7 @@ void carte_immediat_eruption(casee Plateau[13][13], int x, int y)
 
     gotoxy(80, 1);
     set_color(0, 15);
-    nouveau_message("OH NON, LA LAVA QUI COULE ! C'EST BIENTOT FINI...", ROUGE_CLAIR);
+    nouveau_message("OH NON, LE VOLCAN ! C'EST BIENTOT FINI...", ROUGE_CLAIR);
     jeu = 0;
 }
 

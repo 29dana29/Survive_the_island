@@ -48,7 +48,6 @@ int main()
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);
 
-    carte_immediat_placer_baleine(Plateau, 2, 4);
 
     while (jeu==1)
     {
