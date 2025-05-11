@@ -189,7 +189,7 @@ void placer_pions(casee Plateau[13][13], joueur joueurs[], int n_joueurs)
 {
 
     char * noms_pions[10]= {"A","B","C","D","E","F","G","H","I","J"};
-    for (int i = 0; i<2; i++)
+    for (int i = 0; i<10; i++)
     {
         int val_pion = (i+2)/2; //Valeur Formule pas piquee des hannetons grace a division euclid, qui permet de veski toute une liste de pions
         for (int j = 0; j<n_joueurs; j++)
