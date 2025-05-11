@@ -3,11 +3,27 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "donnee.h"
+#include "affichage.h"
 
-
+#define MAX_MESSAGES 10               // Nombre maximum de messages dans la file d'attente
+#define MESSAGE_LENGTH 60             // Longueur maximale d'un message
+#define MESSAGE_X 66                  // Coordonnée X pour la zone d'affichage des messages
+#define MESSAGE_Y 20                  // Coordonnée Y pour la zone d'affichage des messages
 
 int couleurs_equipe[4] = {4, 1, 2, 6};
 extern casee Plateau[13][13];
+
+// Définition d'une structure pour représenter un message
+typedef struct {
+    char text[MESSAGE_LENGTH + 1];    // Texte du message (60 caractères max + caractère de fin '\0')
+    int couleur_texte;                // Couleur du texte (avant-plan)
+} Message;
+
+
+
+
+
+
 void debug_afficher_pions(casee Plateau[13][13])
 {
     for (int i = 0; i < 13; i++)
@@ -152,47 +168,48 @@ void contour(int x, int y, int w, int h)
     gotoxy(x+w, y+h);
     printf("┘");
 }
-void info_zone(int ligne_importance, const char *message)
-{
-    int x = 65;
-    int y = 2 + ligne_importance;
 
-    // Couleur selon importance/ligne
-    switch (ligne_importance)
-    {
-    case 0:
-        set_color(7, 0);
-        break;
-    case 1:
-        set_color(2, 0);
-        break;
-    case 2:
-        set_color(3, 0);
-        break;
-    case 3:
-        set_color(6, 0);
-        break;
-    case 4:
-        set_color(4, 0);
-        break;
-    case 5:
-        set_color(4, 7);
-        break;
-    default:
-        set_color(7, 0);
-        break;
+Message messageQueue[MAX_MESSAGES];   // File d'attente pour stocker les messages
+int messageCount = 0;                 // Nombre actuel de messages dans la file d'attente
+
+// Fonction pour afficher tous les messages dans la file d'attente
+void afficher_messages() {
+    // Effacer toute la zone d'affichage des messages
+    rectangle(MESSAGE_X, MESSAGE_Y, MESSAGE_LENGTH, MAX_MESSAGES, NOIR);
+    contour(MESSAGE_X-1, MESSAGE_Y-1, MESSAGE_LENGTH+2, MAX_MESSAGES+2);
+    // Afficher chaque message dans la file d'attente
+    for (int i = 0; i < messageCount; i++) {
+        gotoxy(MESSAGE_X, MESSAGE_Y + i); // Positionner le curseur pour chaque ligne de message
+        set_color(messageQueue[i].couleur_texte, NOIR); // Définir la couleur du texte avec un fond noir
+        printf("%s", messageQueue[i].text); // Afficher le texte du message
     }
 
-    // Max 60 chars
-    char affichage[61]; // 60 + '\0'
-    strncpy(affichage, message, 60);
-    affichage[60] = '\0';
-
-    gotoxy(x, y);
-    printf("                                                             "); // Efface ligne
-    gotoxy(x, y);
-    printf("%s", affichage);
+    // Réinitialiser la couleur par défaut (blanc sur fond noir)
+    set_color(BLANC, NOIR);
 }
+
+// Fonction pour ajouter un nouveau message dans la file d'attente
+void nouveau_message(const char *message, int couleur_texte) {
+    // Si la file d'attente est pleine, supprimer le message le plus ancien
+    if (messageCount == MAX_MESSAGES) {
+        for (int i = 1; i < MAX_MESSAGES; i++) {
+            messageQueue[i - 1] = messageQueue[i];
+        }
+        messageCount--;
+    }
+
+    // Ajouter le nouveau message à la fin de la file d'attente
+    strncpy(messageQueue[messageCount].text, message, MESSAGE_LENGTH);
+    messageQueue[messageCount].text[MESSAGE_LENGTH] = '\0'; // Assurer la terminaison nulle
+    messageQueue[messageCount].couleur_texte = couleur_texte;
+    messageCount++;
+
+    // Mettre à jour l'affichage
+    afficher_messages();
+}
+
+
+
 
 void selection_menu(int x, int y, char *options[], int num_options, int *selected_index)
 {

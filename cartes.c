@@ -80,7 +80,7 @@ void carte_deplacer_bateau(casee Plateau[13][13], joueur *j)
 {
     rectangle(65, 1, 60, 39, 0);
     gotoxy(75, 22);
-    printf("Les vents favorables !");
+    nouveau_message("Les vents favorables !", BLANC);
     int p_mouvements = 3;
     while (p_mouvements > 0)
     {
@@ -96,18 +96,17 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
     Deplacer n'importe quelle creature sur n'importe quelle case de mer.
     */
     gotoxy(75, 22);
-    printf("Plongeon ?");
+    nouveau_message("Plongeon ?", BLANC);
     int x_s, y_s;
     creature *c = selectionner_creature(Plateau, -1, &x_s, &y_s);
     if (c == NULL) return;
+//     if ((x_d==12||x_d==0)&&(y_d==12||y_d==0))   // Si c'est un coin
 
     // Selection de la case de destination
     int x_d, y_d;
     int valide = 0;
 
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(69, 1);
-    printf("Selectionne la case de destination (case de mer).");
+    nouveau_message("Selectionne la case de destination (case de mer).", BLANC);
 
     while (!valide)
     {
@@ -118,8 +117,7 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
         }
         else
         {
-            gotoxy(69, 3);
-            printf("Ce n'est pas une case de mer valide. Reessaie.");
+            nouveau_message("Ce n'est pas une case de mer valide. Reessaie.", ROUGE);
         }
     }
 
@@ -151,15 +149,12 @@ void carte_plongeon(casee Plateau[13][13], joueur *j)
 
 void carte_de_creature(casee Plateau[13][13], joueur *j)
 {
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(75, 22);
-    printf("Lance le de creature...");
     de_creature(Plateau);
 }
 
 void carte_repulsif(casee Plateau[13][13], joueur *j)
 {
-    printf("REPULSIF");
+    nouveau_message("REPULSIF", BLANC);
 }
 
 void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y)
@@ -202,8 +197,9 @@ void obtenir_carte(casee Plateau[13][13], casee case1, joueur *j, int x, int y)
     }
     else
     {
-        gotoxy(75, 22);
-        printf("Carte obtenue: %s", type_cartes[id]);
+        char message[61];
+        sprintf(message, "Carte obtenue: %s", type_cartes[id]);
+        nouveau_message(message, BLANC);
         int i = 0;
         while ((*j).cartes[i] != -1) i++;
         (*j).cartes[i] = id;
@@ -235,9 +231,7 @@ void jouer_carte(casee Plateau[13][13], joueur *j, int i_carte)
         }
         else
         {
-            gotoxy(75, 20);
-            set_color(12, 5);
-            printf("Aucun nageur pour utiliser la carte Dauphin !");
+            nouveau_message("Aucun nageur pour utiliser la carte Dauphin !", ROUGE);
         }
         break;
     }
@@ -302,9 +296,7 @@ void choisir_carte(joueur j, int *i_carte)
 
     int i_select = 0;
 
-    gotoxy(75, 2);
-    set_color(8, 4);
-    printf("Selectionne la carte que tu veux jouer.\n");
+    nouveau_message("Selectionne la carte que tu veux jouer.\n", BLANC);
 
     selection_menu(75, 4, options, n_cartes + 1, &i_select);
 

@@ -50,7 +50,12 @@ int main()
     int n_joueurs=0;
     joueur joueurs[4];
     initialiser_joueurs(joueurs, &n_joueurs);
+        char message[61];
 
+    /*for (int i =0; i<15; i++) {
+        sprintf(message, "Goat %d", i);
+    nouveau_message(message, ROUGE); // Texte rouge sur fond noir
+    }*/
 
     placer_pions(Plateau, joueurs, n_joueurs);
     placer_bateaux(Plateau, joueurs, n_joueurs);

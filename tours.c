@@ -20,9 +20,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 
     while (!valide)
     {
-        rectangle(65, 1, 60, 39, 0);
-        gotoxy(75, 15);
-        printf("Selectionne la case d'ou tu veux bouger.");
+        nouveau_message("Selectionne la case d'ou tu veux bouger.", BLANC);
 
         selection_case(Plateau, &x_s, &y_s);
 
@@ -34,7 +32,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
         {
             rectangle(65, 1, 60, 39, 0);
             gotoxy(75, 15);
-            printf("Nan y'a pas de pion a toi la.");
+            nouveau_message("Nan y'a pas de pion a toi la.", ROUGE);
         }
     }
     *x_i = x_s;
@@ -68,9 +66,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 
 
     int select_indice;
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(75, 15);
-    printf("Selectionne un pion --");
+    nouveau_message("Selectionne un pion", BLEU);
     selection_menu(75, 16, options_pions, nb, &select_indice);
 
     for (int i = 0; i < 40; i++)
@@ -84,9 +80,7 @@ pion* selectionner_pion_sur_plateau(joueur *j, casee Plateau[13][13],int *x_i,in
 pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *x_i, int *y_i) // si c dans un bato ou pas
 {
     int x_d, y_d;
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(75, 15);
-    printf("Selectionne la case de destination");
+    nouveau_message("Selectionne la case de destination", BLANC);
     selection_case(Plateau, &x_d, &y_d);
     *x_i=x_d;
     *y_i=y_d;
@@ -118,9 +112,7 @@ pion* selectionner_emplacement_vide_pion(joueur *j, casee Plateau[13][13], int *
         {
             // Faut maintenant choisir entre bateau et juste la mer
             char * choix_b_p[2] = {"Rejoindre le bateau", "Juste aller dans la case"};
-            rectangle(65, 1, 60, 39, 0);
-            gotoxy(70, 1);
-            printf("Ou voulez vous mettre le pion");
+            nouveau_message("Ou voulez vous mettre le pion", BLANC);
             selection_menu(70, 4, choix_b_p, 2, &i_selec_b_p);
 
         }
@@ -146,8 +138,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
     */
 
     //rectangle(65, 1, 60, 39, 0);
-    gotoxy(69, 5);
-    printf("Selectionne la case contenant la creature a deplacer.");
+    nouveau_message("Selectionne la case contenant la creature a deplacer.", BLANC);
 
     int x_s, y_s;
     int valide = 0;
@@ -168,8 +159,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
 
         if (!valide)
         {
-            gotoxy(69, 3);
-            printf("Aucune creature valide ici. Choisis une autre case.");
+            nouveau_message("Aucune creature valide ici. Choisis une autre case.", ROUGE);
         }
     }
 
@@ -198,10 +188,7 @@ creature* selectionner_creature(casee Plateau[13][13], int type_restriction,int 
         options[i] = option_creatures[Plateau[x_s][y_s].creatures[creatures_et_i[i]].type];
     }
 
-    rectangle(65, 1, 60, 39, 0);
-    gotoxy(75, 2);
-    set_color(5, 4);
-    printf("Selectionne la creature que tu veux bouger");
+    nouveau_message("Selectionne la creature que tu veux bouger", BLANC);
 
     int i_select = 0;
     selection_menu(75, 4, options, n_creatures, &i_select);
@@ -243,9 +230,7 @@ void deplacer_pion(joueur *joueur, casee Plateau[13][13], int *p_mouvement, int 
         }
         else
         {
-            gotoxy(75, 20);
-            set_color(12, 5);
-            printf("Selectionne une case adjacente");
+            nouveau_message("Selectionne une case adjacente", ROUGE);
         }
     }
     if ((x_d==12||x_d==0)&&(y_d==12||y_d==0))   // Si c'est un coin
@@ -514,8 +499,7 @@ void enelever_tuile(joueur *joueur, casee Plateau[13][13])
         }
         else
         {
-            gotoxy(70, 15);
-            printf("Pas valide.");
+
         }
     }
     casee copie1 = Plateau[x_s][y_s];
@@ -552,9 +536,15 @@ void tour(joueur *joueur, casee Plateau[13][13])
 
     while (p_mouvement > 0 && total_pion_couleur(Plateau, (*joueur).equipe)>0)
     {
+        /* ANCIEN:
         rectangle(65, 1, 60, 39, 0);
         gotoxy(70, 2);
-        printf("Il vous reste %d deplacement(s)", p_mouvement);
+        printf("Il vous reste %d deplacement(s)", p_mouvement); */
+        // Nouveau:
+        char message[61];
+        sprintf(message, "Il vous reste %d deplacement(s)", p_mouvement);
+        nouveau_message(message, BLANC);
+
         selection_menu(70, 4, options, 2, &select_indice);
 
         if (select_indice == 0)
